@@ -1,0 +1,281 @@
+<?php
+if (!isset($docFiles)) {
+    $docFiles = [];
+}
+if (!isset($dossier)) {
+    $dossier = [];
+}
+if (!isset($docChild)) {
+    $docChild = [];
+}
+$iduser= $this->session->get('userid');
+
+$permission = explode(",", $dossier->permission); 
+//die(print_r($iduser));
+?>
+<div class="contain">
+    <h4 class="text-warning">Dossier <?= $dossier->nomdos ?></h4>
+    <!--Modal de modification du nom d'un dossier -->
+    <form method="post" id="form-folder" action="updateFoldersChild" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="clearfix">&nbsp;</div>
+                <span><i class="fa fa-folder-open-o fa-5x text-warning"></i></span><br>
+                <input type="text" class="form-control inputF" placeholder="Nom du dossier" name="foldername" value="<?= $dossier->nomdos ?>" required=""><br>
+                <div class="clearfix">&nbsp;</div>
+                 <?php if ($dossier->iduser == $iduser): ?>
+                <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check btn-primary"></i> Modifier </button>
+                 <?php endif; ?>
+                <span>&nbsp;</span>
+                <!--a href="newFolder" type="button" class="btn btn-default btn-sm"><i class="fa fa-backward text-warning"></i> cr&eacute;er dossiers </a-->
+                <span>&nbsp;</span>
+                <a href="<?= ($dossier->parent ) != 0 ? "open?id=" . base64_encode($dossier->parent) : " mesFolders" ?>" type="button" class="btn btn-default btn-sm"><i class="fa fa-backward text-warning"></i> pr&eacute;c&eacute;dent </a>
+            </div>
+            <input type="hidden" name="tree" value="<?= $dossier->iddos ?>">
+            <div style="float: left; border: 1px solid #ccc; height: 250px;"></div>
+
+            <div class="col-md-5">
+                <?php if(in_array("readWrite", $permission) || ($dossier->iduser == $iduser)): ?>
+                <span class="col-md-12" ><a href="#" data-toggle="modal" data-target="#myfolder"><i class="fa fa-folder text-warning"></i> Nouveau dossier</a></span>
+                <span class="col-md-12" >&nbsp;</span>
+                <span class="col-md-12" ><a href="#" data-toggle="modal" data-target="#myfile"><i class="fa fa-file text-primary"></i> Nouveau fichier</a></span>
+                <?php endif; ?>
+                <div class="clearfix">&nbsp;</div>
+                <div class="clearfix">&nbsp;</div>
+                <div class="col-md-12">
+                    <?php if($dossier->iduser == $iduser): ?>
+                    <h5 class="text-warning">Modifier les droits d&apos;acc&egrave;s du dossier <?= $dossier->nomdos ?></h5>
+                    
+                    <table class="table table-responsive">
+                       
+                        <tr class="table-striped">
+                            <td><label class="checkbox-inline"><input type='checkbox'  name='config[]' value="read" <?= (in_array("read", $permission)) ? "checked='checked' " : "" ?>> droit de lecture du (dossier,fichier,archives)</label></td>
+                        </tr>
+                        <tr class="table-striped">
+                            <td><label class="checkbox-inline"><input type='checkbox'  name='config[]' value="readWrite" <?= (in_array("readWrite", $permission)) ? "checked='checked' " : "" ?> >droit de lecture et &eacute;criture (dossier,fichier,archives)</label></td>
+                        </tr>
+                    </table> 
+                    <?php endif; ?>
+                </div>    
+            </div>        
+        </div>
+    </form>
+    <div class="clearfix">&nbsp;</div>
+
+
+    <!-- modal de cr�ation d'un fichier-->
+
+    <div id="myfile" class="modal fade" role="dialog">
+        <form method="post" action="childFiles" enctype="multipart/form-data">
+            <div class="modal-dialog">
+
+                <div class="modal-content" >
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title text-info">Cr&eacute;er un nouveau fichier</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="clearfix">&nbsp;</div>
+                        <table class="table table-responsive" >
+                            <tr>
+                                <td colspan="4">
+                                    <span class="col-md-6"><input type="text" name="descfile[]" class="form-control" placeholder="description fichier" required=""></span>
+                                    <span class="col-md-4"><input type="file" name="fichier[]"></span>
+                                    <span class="col-md-2" id="bloc-button">
+                                        <button type="button" class="btn btn-success btn-xs"  id="addDoc" >
+                                            <i class="fa fa-plus"></i> &nbsp;Ajouter
+                                        </button>
+                                    </span><br>
+
+                                </td>
+                            </tr>                               
+                        </table> 
+                        <table class="table table-responsive"id="tableau_doc" >
+                            <tr>
+                                <td colspan="4">
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        <div class="clearfix">&nbsp;</div>
+                        <div class="col-md-12">
+                            <h4 class="text-warning">Attribuer les droits d&apos;acc&egrave;s</h4>
+                            <table class="table table-responsive">
+                                <tr class="table-striped">
+                                    <td><label class="checkbox-inline"><input type='checkbox'  name='config[]' value="read"> droit de lecture du fichier</label></td>
+                                </tr>
+                                <tr class="table-striped">
+                                    <td><label class="checkbox-inline"><input type='checkbox'  name='config[]' value="readWrite">droit de lecture et &eacute;criture du fichier</label></td>
+                                </tr>
+                            </table> 
+                            <div class="clearfix">&nbsp;</div>
+                     
+                        </div>  
+                        
+                        <div class="clearfix">&nbsp;</div>
+                        <input type="hidden" name="tree" value="<?= $dossier->iddos ?>">
+                        <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check btn-primary"></i> Enregistrer </button>
+                        <!--span>&nbsp;</span>
+                        <a href="newFolder" type="button" class="btn btn-default btn-sm"><i class="fa fa-backward text-warning"></i> cr&eacute;er dossiers </a-->
+                    </div>
+                    <div class="modal-footer">
+                        <!--button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Valider</button-->
+                        <!--button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Fermer</button-->
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <!-- modal de cr�ation d'un nouveau dossier -->
+
+    <div id="myfolder" class="modal fade" role="dialog">
+        <form method="post" action="childFolders">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title text-info">Cr&eacute;er un nouveau dossier</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="clearfix">&nbsp;</div>
+                        <div class="col-md-12">
+                            <div class="clearfix">&nbsp;</div>
+                            <span><i class="fa fa-folder-open-o fa-5x text-warning"></i></span><br>
+                            <input type="text" class="form-control inputF" placeholder="Nom du dossier" name="foldername"  required=""><br>
+
+                        </div>
+                        <div class="clearfix">&nbsp;</div>
+                        <div class="col-md-12">
+                            <h3>Attribuer les droits d&apos;acc&egrave;s</h3>
+                            <table class="table table-responsive">
+                                <tr class="table-striped">
+                                    <td><label class="checkbox-inline"><input type='checkbox'  name='config[]' value="read"> droit de lecture du (dossier,fichier,archives)</label></td>
+                                </tr>
+                                <tr class="table-striped">
+                                    <td><label class="checkbox-inline"><input type='checkbox'  name='config[]' value="readWrite">droit de lecture et &eacute;criture (dossier,fichier,archives)</label></td>
+                                </tr>
+                            </table> 
+                            <div class="clearfix">&nbsp;</div>
+                            <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check btn-primary"></i> Enregistrer </button>
+                            <span>&nbsp;</span>
+                            <a href="newFolder" type="button" class="btn btn-default btn-sm"><i class="fa fa-backward text-warning"></i> cr&eacute;er dossiers </a>
+
+                        </div>  
+                        <input type="hidden" name="tree" value="<?= $dossier->iddos ?>">
+                    </div>
+                    <div class="modal-footer">
+                        <!--button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Valider</button-->
+                        <!--button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Fermer</button-->
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <!-- affichage de tous les documents d'un dossier(folder and file)-->
+
+
+    <div class="col-md-12 row notification">
+        <?php if (sizeof($this->flashSession->getMessages(NULL, false)) > 0): ?>
+            <div><p><?php $this->flashSession->output() ?></p></div>
+        <?php endif; ?>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-responsive table-striped table-hover ui-datatable" 
+                   data-global-search="false"
+                   data-length-change="true"
+                   data-info="true"
+                   data-paging="true"
+                   data-page-length="10"
+                   >
+                <thead class="table-responsive">
+                    <tr class="table-striped">
+                        <th> </th>
+                        <th><b>N&deg;</b></th>
+                        <th data-filterable="text" data-sortable="true"><b>Nom dossier/fichier</b></th>
+                        <th><b>file(s)</b></th>
+                        <th align='center'><b>ouvrir</b></th>
+                        <th align='center'><b>Modifier</b></th>
+                        <th align='center'><b>supprimer</b></th>
+                         <?php if ($dossier->iduser == $iduser): ?>
+                        <th align='center'><b>partager &agrave;</b></th>
+                         <?php endif; ?>
+                    </tr>
+                </thead>
+                <tbody class="table-responsive">
+                    <?php
+                    $i = 0;
+                    foreach ($docChild as $child): $i++;
+                        $code = explode(",", $child->permission);
+
+                        ?>
+                        <tr class="table-striped">
+                            <td><input type="checkbox" value=""></td>
+                            <td><b><?= $i ?>&nbsp; <i class="fa fa-folder text-warning"></i> </b></td>
+                            <td><?= $child->nomdos ?></td>
+                            <td><?= "(" . count($child->fichier) . ")" ?></td>
+                            <?php if (in_array("read", $code)  || (empty($child->permission)) && $this->session->get('userid') == $child->iduser) : ?>
+                            <td align="center"><a href="open?id=<?= base64_encode($child->iddos) ?>"><span class="glyphicon glyphicon-eye-open text-primary"></span></a></td><?php else: ?>
+                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
+                            <?php if(in_array("readWrite", $permission) && $dossier->iduser!= $iduser): if (in_array("readWrite", $code)  || (empty($child->permission)) && $this->session->get('userid') == $child->iduser) : ?>
+                                <td align="center"><a href="updateFolders?id=<?= base64_encode($child->iddos) ?>"><span class="glyphicon glyphicon-pencil text-warning"></span></a></td><?php else: ?>
+                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; elseif($dossier->iduser == $iduser): ?>
+                                <td align="center"><a href="updateFolders?id=<?= base64_encode($child->iddos) ?>"><span class="glyphicon glyphicon-pencil text-warning"></span></a></td><?php else: ?>
+                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
+                            <?php if(in_array("readWrite", $permission) && $dossier->iduser!= $iduser): if (in_array("readWrite", $code)  || (empty($child->permission)) && $this->session->get('userid') == $child->iduser) : ?>
+                                <td align="center"><a href="deleteFoldersO?id=<?= base64_encode($child->iddos) ?>" data-confirm="<?= $child->nomdos ?>"><span class="glyphicon glyphicon-trash text-danger"></span></a></td><?php else: ?>
+                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; elseif($dossier->iduser == $iduser): ?>
+                                <td align="center"><a href="deleteFoldersO?id=<?= base64_encode($child->iddos) ?>" data-confirm="<?= $child->nomdos ?>"><span class="glyphicon glyphicon-trash text-danger"></span></a></td><?php else: ?>
+                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
+                                 <?php if ($dossier->iduser == $iduser): ?>
+                                <td align="center"><a href="sharedoc?id=<?= base64_encode($child->iddos) ?>"><span class="fa fa-share-alt"></span></a></td>
+                                 <?php endif; ?>
+                        </tr>
+                    <?php endforeach; ?>
+
+                    <?php foreach ($docFiles as $file): $i++; ?>                        
+                    <?php $code = explode(",", $file->permission); ?>                        
+
+                        <tr class="table-striped">
+                            <td><input type="checkbox" value=""></td>
+                            <td><b><?= $i ?>&nbsp; <i class="fa fa-file text-primary"></i> </b></td>
+                            <td><?= $file->description ?></td>
+                            <td><?= $file->nomfile ?></td>
+                            
+                              <?php if(in_array("read", $permission) && $dossier->iduser!= $iduser): if (in_array("read", $code)  || (empty($file->permission)) && $this->session->get('userid') == $file->iduser) : ?>
+                                <td align="center"><a href="<?= $this->url->get("document/open?id=".base64_encode($file->idfile))?>" target="_blank"><span class="glyphicon glyphicon-eye-open text-primary"></span></a></td><?php else: ?>
+                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; elseif($dossier->iduser == $iduser): ?>
+                                <td align="center"><a href="<?= $this->url->get("document/open?id=".base64_encode($file->idfile))?>" target="_blank"><span class="glyphicon glyphicon-eye-open text-primary"></span></a></td><?php else: ?>
+                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
+                            
+                           
+                           
+                             <?php if(in_array("readWrite", $permission) && $dossier->iduser!= $iduser): if (in_array("readWrite", $code)  || (empty($file->permission)) && $this->session->get('userid') == $file->iduser) : ?>
+                                <td align="center"><a href="updateFiles?id=<?= base64_encode($file->idfile) . '.' . base64_encode($dossier->iddos) ?>"><span class="glyphicon glyphicon-pencil text-warning"></span></a></td><?php else: ?>
+                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; elseif($dossier->iduser == $iduser): ?>
+                                <td align="center"><a href="updateFiles?id=<?= base64_encode($file->idfile) . '.' . base64_encode($dossier->iddos) ?>"><span class="glyphicon glyphicon-pencil text-warning"></span></a></td><?php else: ?>
+                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>    
+                             <?php if(in_array("readWrite", $permission) && $dossier->iduser!= $iduser): if (in_array("readWrite", $code)  || (empty($file->permission)) && $this->session->get('userid') == $file->iduser) : ?>
+                                <td align="center"><a href="deleteFilesO?id=<?= base64_encode($file->idfile) ?>" data-confirm="<?= $file->description ?>"><span class="glyphicon glyphicon-trash text-danger"></span></a></td><?php else: ?>
+                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; elseif($dossier->iduser == $iduser): ?>
+                                <td align="center"><a href="deleteFilesO?id=<?= base64_encode($file->idfile) ?>" data-confirm="<?= $file->description ?>"><span class="glyphicon glyphicon-trash text-danger"></span></a></td><?php else: ?>
+                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>  
+                                 <?php if ($dossier->iduser == $iduser): ?>
+                                <td align="center"><a href="sharefile?id=<?= base64_encode($file->idfile) ?>" ><span class="fa fa-share-alt"></span></a></td>
+                                 <?php endif; ?>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

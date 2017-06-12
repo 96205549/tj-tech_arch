@@ -1,0 +1,124 @@
+<?php
+if (!isset($folders)) {
+    $folders = [];
+}
+if (!isset($files)) {
+    $files = [];
+}
+if (!isset($zip)) {
+    $zip = [];
+}
+if (!isset($logs)) {
+    $logs = [];
+}
+
+?>
+<div class="contain">
+    <span class="col-md-12"><h4 class="text-warning">Dasboard/</h4><h5 class="text-info"><u> Plateforme electronique des archives</u></h5></span>
+    <div class="row">
+        <div class="col-md-12">
+            <div>&nbsp;</div>
+            <div class="col-md-offset-1 col-md-3 cercle">
+                <h4 class="text-primary">Dossier</h4><br>
+                <i class="fa fa-folder-open-o fa-5x text-warning"></i><br>
+                <b class="text-warning">Utilisations des donn&eacute;es</b><br><br>
+                <b class="text-info"><?= $folders->count() ?> dossier(s)</b>
+            </div>
+
+            <div class="col-md-offset-1 col-md-3 cercle">
+                <h4 class="text-primary">fichier</h4><br>
+                <i class="fa fa-file fa-5x text-warning"></i><br>
+                <b class="text-warning">Utilisations des donn&eacute;es</b><br><br>
+                <b class="text-info"><?= $files->count() ?> fichier(s)</b>
+            </div>
+            <div class="col-md-offset-1 col-md-3 cercle">
+                <h4 class="text-primary">archives</h4><br>
+                <i class="fa fa-file-archive-o fa-5x text-warning"></i><br>
+                <b class="text-warning">Utilisations des donn&eacute;es</b><br><br>
+                <b class="text-info"><?= $zip->count() ?> archive(s)</b>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix">&nbsp;</div>
+    <div class="clearfix">&nbsp;</div>
+    <div class="row">
+        <div class="col-md-4">           
+            <div class="panel panel-transparent" style="background-color:whitesmoke; ">
+                <div class="panel-body no-padding">
+                    <div id="portlet-circular-minimal" class="panel panel-default">
+                        <div class="panel-heading ">
+                            <div class="panel-title"><i class="fa fa-info-circle text-info"></i>&nbsp;Information syst&egrave;me
+                            </div>
+                        </div>
+                        <div class="panel-body" style="background-color: #18C0DF">
+                            <p>
+                                 <b>Electra</b> est une application vous permettant de g&eacute;rer vos documents electronique, 
+                                elle vous offre une faciliter dans la gestion de vos documents, 
+                                et vous offre beaucoup d&apos;avantage que sont:<br>
+                                <i class="fa fa-caret-right"></i> recheche facile d'un document(dossier, fichier, archive)<br>
+                                <i class="fa fa-caret-right"></i> Ouverture rapide du document<br>
+                                <i class="fa fa-caret-right"></i> gestions des contacts client<br>
+                                <i class="fa fa-caret-right"></i> Envoie des campagnes Sms au client<br>
+                            </p>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">           
+            <div class="panel panel-transparent" style="background-color:whitesmoke; ">
+                <div class="panel-body no-padding">
+                    <div id="portlet-circular-minimal" class="panel panel-default">
+                        <div class="panel-heading ">
+                            <div class="panel-title"><i class="fa fa-desktop text-info"></i>&nbsp;&agrave; propos du constructeur?
+                            </div>
+                        </div>
+                        <div class="panel-body" style="background-color: #DAEFA3">
+
+                            <p>
+                                <b>Electra</b> est con&ccedil;u par des developpeurs b&eacute;ninois de l&apos;entreprise TweeceJo-tech
+                                Pour toute d&eacute;faillance du syst&egrave;me n&apos;h&eacute;siter pas &agrave; nous contacter, tout en nous 
+                                envoyant vos requ&ecirc;tes et sugestion. Merci de nous aidez &agrave; am&eacute;liorer le syst&egrave;me.
+                                Ecivez-nous au <a>tweecejo-techgmail.com</a>
+                            </p>
+
+                            <p>
+
+                             <?php  /* modifier===><?= $this->session->get('mod') ?><br>
+                                supprimer===><?= $this->session->get('sup') ?><br>
+                                telecharger===><?= $this->session->get('telech') ?><br>
+                                sms===><?= $this->session->get('sms') ?><br>
+                                systeme===><?= $this->session->get('systeme') ?><br>
+                                corbeille===><?= $this->session->get('corbeille') ?><br>
+                                permission===><?= $this->session->get('permission') ?><br>*/ ?>                               
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-transparent" style="background-color: whitesmoke">
+                <div class="panel panel-warning no-padding">
+                    <div class="panel-heading">Activit&eacute;es r&eacute;centes</div>
+                    <div class="panel-body" style="background-color:  #f7ecb5">
+                        <table class="table table-responsive table-striped">
+
+                            <?php foreach ($logs as $value): ?>
+                                <tr class="table table-striped">
+                                    <td><?= $value->activite ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+
+                        </table>
+                    </div>
+                    <?php if (sizeof($logs) > 6): ?><a href="">Voir plus</a><?php endif; ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

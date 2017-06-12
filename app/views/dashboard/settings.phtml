@@ -1,0 +1,98 @@
+<?php
+if (!isset($param)) {
+    $param = [];
+}
+
+$actif= explode(",", $param->module)
+?>
+<div class="contain">
+    <h4 class="text-warning"> Configuration syst&egrave;me</h4>
+    <form method="post" action="settings" enctype="multipart/form-data">
+        <div class="col-md-10">&nbsp;</div>
+        <div class="col-md-2"><button type="submit" class="btn btn-warning fa fa-check">Mettre &aacute; jour</button></div>
+        <div class="col-md-12">
+            <h5 class="text-info"> <i class="fa fa-check"></i> Activer et d&eacute;sactiver les modules suivant</h5>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <div class="col-md-6">
+            <label class="checkbox-inline">
+                <input type="checkbox" <?= (in_array("juridique", $actif)) ? "checked" :" " ?> value='juridique' name="module[]" data-toggle="toggle" data-on="actif" data-off="inactif" data-size="mini">Service juridique
+            </label>
+            <br>
+            <span class="clearfix">&nbsp;</span>
+            <label class="checkbox-inline">
+                <input type="checkbox" <?= (in_array("administratif", $actif))? "checked" :" " ?> data-toggle="toggle" name="module[]" value='administratif' data-on="actif" data-off="inactif" data-size="mini">Service Administratif
+            </label><br>
+            <span class="clearfix">&nbsp;</span>
+            <label class="checkbox-inline">
+                <input type="checkbox" <?= (in_array("comptabilite", $actif))? "checked" :" " ?> data-toggle="toggle" value='comptabilite' name="module[]" data-on="actif" data-off="inactif" data-size="mini">Service comptabilite
+            </label><br>
+            <span class="clearfix">&nbsp;</span>
+        </div>
+        <div class="col-md-6">
+            <label class="checkbox-inline">
+                <input type="checkbox" <?= (in_array("commercial", $actif))? "checked" :" " ?>  data-toggle="toggle" value='commercial' name="module[]" data-on="actif" data-off="inactif" data-size="mini">Service Commercial
+            </label>
+            <br>
+            <span class="clearfix">&nbsp;</span>
+            <label class="checkbox-inline">
+                <input type="checkbox" <?= (in_array("contact", $actif))? "checked" :" " ?> data-toggle="toggle" value='contact' name="module[]" data-on="actif" data-off="inactif" data-size="mini">Carnet d'adresse
+            </label><br>
+            <span class="clearfix">&nbsp;</span>
+            <label class="checkbox-inline">
+                <input type="checkbox" <?= (in_array("messagerie", $actif))? "checked" :" " ?> data-toggle="toggle" value='messagerie' name="module[]" data-on="actif" data-off="inactif" data-size="mini">Messagerie sms
+            </label><br>
+            <span class="clearfix">&nbsp;</span>
+        </div>
+
+        <span class="clearfix">&nbsp;</span>
+        <div class="col-md-12">
+            <h5 class="text-info"> <i class="fa fa-check"></i> Configurer l&apos; icone et le logo de l&apos; application</h5>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <div class="col-md-6">
+            <section class="col-sm-4">
+                <div>&nbsp;</div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail col-md-12" style="height: 150px;">
+                                    <img src="../public/archives/<?= $param->logo ?>"  alt="logo">
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                                <div>
+                                    <span class="btn btn-default btn-file"><span class="fileinput-new">Selectionnez l&apos;image</span><span class="fileinput-exists"><i class="fa fa-pencil text-primary"></i></span><input type="file" name="logo[]"></span>
+                                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput"><i class="fa fa-remove text-danger"></i></a>
+                                </div>
+                            </div>                  
+                        </div>
+                        <span class="col-md-12"><a href="dropfile?f=logo" class="btn btn-danger"> <i class="fa fa-remove"></i>&nbsp;Supprimer le logo</a></span>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-6">
+            <section class="col-sm-4">
+                <div>&nbsp;</div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail col-md-12" style="height: 150px;">
+                                    <img src="../public/archives/<?= $param->icone ?>"  alt="icone">
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                                <div>
+                                    <span class="btn btn-default btn-file"><span class="fileinput-new">Selectionnez l&apos;image</span><span class="fileinput-exists"><i class="fa fa-pencil text-primary"></i></span><input type="file" name="logo[]"></span>
+                                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput"><i class="fa fa-remove text-danger"></i></a>
+                                </div>
+                            </div>                  
+                        </div>
+                        <span class="col-md-12"><a href="dropfile?f=icone" class="btn btn-danger"> <i class="fa fa-remove"></i>&nbsp;Supprimer l&apos;icone</a></span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </form>
+</div>

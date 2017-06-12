@@ -1,0 +1,91 @@
+<?php
+if (!isset($dossiers)) {
+    $dossiers = [];
+}
+$iduser= $this->session->get('userid');
+?>
+<div class="contain">
+    <h4 class="text-warning">Nouveau dossier</h4>
+
+    <form method="post" id="form-folder" action="newFolder" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="clearfix">&nbsp;</div>
+                <span><i class="fa fa-folder-open-o fa-5x text-warning"></i></span><br>
+                <input type="text" class="form-control fln" placeholder="Nom du dossier" name="foldername" required=""><br>
+                <div class="clearfix">&nbsp;</div>
+                <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check btn-primary"></i> Enregistrer </button>
+                <span>&nbsp;</span>
+                <button type="reset" class="btn btn-default btn-sm">Annuler </button>
+            </div>
+
+            <div style="float: left; border: 1px solid #ccc; height: 250px;"></div>
+
+            <div class="col-md-5">
+                <h3>Attribuer les droits d&apos;acc&egrave;s</h3>
+                <table class="table table-responsive">
+                    <tr class="table-striped">
+                        <td><label class="checkbox-inline"><input type='checkbox'  name='config[]' value="read"> droit de lecture du (dossier,fichier,archives)</label></td>
+                    </tr>
+                    <tr class="table-striped">
+                        <td><label class="checkbox-inline"><input type='checkbox'  name='config[]' value="readWrite">droit de lecture et &eacute;criture (dossier,fichier,archives)</label></td>
+                    </tr>
+                </table> 
+            </div>        
+        </div>
+    </form>
+    <div class="clearfix">&nbsp;</div>
+
+    <div class="col-md-12 row notification alert-dismissible" role='alert'>     
+        <?php if (sizeof($this->flashSession->getMessages(NULL, false)) > 0): ?>
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
+            <div> 
+                <p><?php $this->flashSession->output() ?></p></div>
+        <?php endif; ?>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-responsive table-striped">
+                <tr class="table-striped">
+                    <td> </td>
+                    <td><b>N&deg;</b></td>
+                    <td><b>Nom dossier</b></td>
+                    <td><b>file(s)</b></td>
+                    <td align='center'><b>ouvrir</b></td>
+                    <td align='center'><b>Modifier</b></td>
+                    <td align='center'><b>supprimer</b></td>
+                    <td align='center'><b>transferer &agrave;</b></td>
+                </tr>
+                <?php
+                $i = 0;
+                foreach ($dossiers as $doc): $i++;
+                    $code = explode(",", $doc->permission);
+
+                    ?>
+                    <tr class="table-striped">
+                        <td><i class="fa fa-folder-open text-warning"></i></td>
+                        <td><b><?= $i ?></b></td>
+                        <td><?= $doc->nomdos ?></td>
+                        <td><?= "(" . count($doc->fichier) . ")" ?></td>
+                        <?php if (in_array("read", $code) || (empty($doc->permission)) && $this->session->get('userid') == $doc->iduser) : ?><td align="center"><a href="openFolder?id=<?= base64_encode($doc->iddos) ?>"><span class="glyphicon glyphicon-eye-open text-primary"></span></a></td><?php else: ?>
+                            <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
+                        <?php if (in_array("readWrite", $code) || (empty($doc->permission)) && $this->session->get('userid') == $doc->iduser) : ?>
+                            <td align="center"><a href="updateFolder?id=<?= base64_encode($doc->iddos) ?>"><span class="glyphicon glyphicon-pencil text-warning"></span></a></td><?php else: ?>
+                            <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
+                        <?php if (in_array("readWrite", $code) || (empty($doc->permission)) && $this->session->get('userid') == $doc->iduser) : ?><td align="center"><a href="deleteFolderPn?id=<?= base64_encode($doc->iddos) ?>" data-confirm="<?= $doc->nomdos ?>"><span class="glyphicon glyphicon-trash text-danger"></span></a></td><?php else: ?>
+                            <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
+                            <?php if($doc->iduser == $iduser): ?>
+                            <td align="center"><a href="sharedoc?id=<?= base64_encode($doc->iddos) ?>" ><span class="fa fa-share-alt text-primary"></span></a></td>
+                            <?php else: ?>
+                            <td>&nbsp;<i class="fa fa-lock text-danger"></i></td>
+                        <?php endif; ?>
+                    </tr>
+                <?php endforeach; ?>
+
+            </table>
+        </div>
+    </div>
+</div>

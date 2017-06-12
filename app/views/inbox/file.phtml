@@ -1,0 +1,46 @@
+<?php
+if (!isset($fichier)) {
+    $fichier = [];
+}
+//die(print_r($fichier));
+?>
+<div class="contain">
+     <?php if (!empty($fichier)): ?>
+    <h5 class="text-warning">fichier <blockquote> <p class="small-text"><?= $fichier->description ?></p</blockquote></h5>
+    <div class="clearfix">&nbsp;</div>
+    <div class="col-md-12 row notification">
+        <?php if (sizeof($this->flashSession->getMessages(NULL, false)) > 0): ?>
+            <div><p><?php $this->flashSession->output() ?></p></div>
+        <?php endif; ?>
+    </div>
+  
+    <div class="row">
+       
+        <div class="col-lg-12 col-md-12 col-sm-12 ">
+            <iframe frameborder="0"
+                    scrolling="no"
+                    marginheight="0"
+                    marginwidth="0"
+                    height="600"
+                    class="col-md-12 embed-responsive-item" src="../public/archives/<?= $fichier->nomfile ?>" allowfullscreen="">
+
+            </iframe>
+        </div>
+        
+        <!---div class="row">&nbsp;</div>
+        <div class="alert alert-warning alert-dismissible" role='alert'>
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
+            <strong>Warning!</strong> Better check yourself, you're not looking too good.
+        </div-->
+    </div>
+     <?php else: ?>
+      <div class="col-lg-12 col-md-12 col-sm-12 ">
+          <blockquote> <h1 class="text-justify text-warning">Error page</h1></blockquote>
+        </div>
+    <?php endif;?>
+</div>
+
+
+

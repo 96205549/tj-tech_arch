@@ -1,0 +1,56 @@
+<?php
+if (!isset($param)) {
+    $param = [];
+}
+$actif = explode(",", $param->module);
+//die(print_r($param->logo));
+?>
+
+<div class="contain">   
+    <div class="main">
+
+        <div class="container">
+            <div class="col-md-12 row">
+                <?php if (sizeof($this->flashSession->getMessages(NULL, false)) > 0): ?>
+                    <div><p><?php $this->flashSession->output() ?></p></div>
+                <?php endif; ?>
+            </div>
+            <center>
+                <div class="middle">
+                    <div id="login">
+
+                        <form action="<?= $this->url->get("session/login") ?>" method="post">
+
+                            <fieldset class="clearfix">
+
+                                <p ><span class="fa fa-user"></span><input type="text"  name="username" Placeholder="Username" ></p> <!-- JS because of IE support; better: placeholder="Username" -->
+                                <p><span class="fa fa-lock"></span><input type="password" name="pwd"  Placeholder="Password" </p> <!-- JS because of IE support; better: placeholder="Password" -->
+
+                                <div>
+                                    <span style="width:48%; text-align:left;  display: inline-block;"><a class="small-text" href="#">Mot de passe
+                                            oublier?</a></span>
+                                    <span style="width:50%; text-align:right;  display: inline-block;"><input type="submit" value="Connexion"></span>
+                                </div>
+
+                            </fieldset>
+                            <div class="clearfix"></div>
+                        </form>
+
+                        <div class="clearfix"></div>
+
+                    </div> <!-- end login -->
+                    <div class="logo">
+                        <?php if($param->logo != " "): ?>
+                            <img src="<?= $this->url->getBaseUri(); ?>/public/archives/<?= $param->logo ?>"  alt="logo" class="img-responsive img-thumbnail">
+                        <?php else: ?>
+                            LOGO
+                        <?php endif; ?>
+                        <div class="clearfix"></div>
+                    </div>
+
+                </div>
+            </center>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,50 @@
+<?php
+if (!isset($folder)) {
+    $folder = [];
+}
+?>
+<div class="contain">
+     <h4 class="text-warning">Dossier <?= $folder->nomdos ?></h4>
+    <!--Modal de modification du nom d'un dossier -->
+    <form method="post" id="form-folder" action="updateFolders" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="clearfix">&nbsp;</div>
+                <span><i class="fa fa-folder-open-o fa-5x text-warning"></i></span><br>
+                <input type="text" class="form-control fln" placeholder="Nom du dossier" name="foldername" value="<?= $folder->nomdos ?>" required=""><br>
+                <div class="clearfix">&nbsp;</div>
+                <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check btn-primary"></i> Modifier </button>
+                <span>&nbsp;</span>
+                <a href="open?id=<?= base64_encode($folder->parent) ?>" class="btn btn-default btn-sm"><i class="fa fa-backward text-warning"></i>&nbsp; Retour </a>
+            </div>
+
+            <div style="float: left; border: 1px solid #ccc; height: 250px;"></div>
+            <input type="hidden" name="tree" value="<?= $folder->iddos ?>">
+            <div class="col-md-5">
+                <h3>Attribuer les droits d&apos;acc&egrave;s</h3>
+                <?php $permission = explode(",", $folder->permission) ?>
+                <table class="table table-responsive">
+                    <tr class="table-striped">
+                        <td><label class="checkbox-inline"><input type='checkbox'  name='config[]' value="read" <?= (in_array("read", $permission)) ? "checked='checked' " : "" ?>> droit de lecture du (dossier,fichier,archives)</label></td>
+                    </tr>
+                    <tr class="table-striped">
+                        <td><label class="checkbox-inline"><input type='checkbox'  name='config[]' value="readWrite" <?= (in_array("readWrite", $permission)) ? "checked='checked' " : "" ?>>droit de lecture et &eacute;criture (dossier,fichier,archives)</label></td>
+                    </tr>
+
+                </table> 
+
+
+            </div>        
+        </div>
+    </form>
+    <div class="clearfix">&nbsp;</div>
+   
+    <div class="col-md-12 row notification">
+        <?php if (sizeof($this->flashSession->getMessages(NULL, false)) > 0): ?>
+            <div><p><?php $this->flashSession->output() ?></p></div>
+        <?php endif; ?>
+    </div>
+    <div class="clearfix">&nbsp;</div>
+   
+</div>
+

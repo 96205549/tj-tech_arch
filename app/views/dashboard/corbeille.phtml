@@ -1,0 +1,52 @@
+<?php
+if (!isset($corbeilles)) {
+    $corbeilles = [];
+}
+
+?>
+<div class="contain">
+    <h4 class="text-info">Ma corbeille</h4>
+    <h5><span class="col-md-offset-8 col-md-2"><a href="formatCorbeille"  class="btn-link btn-default formatDrash">Vider la corbeille <i class="glyphicon glyphicon-trash text-danger"></i></a></span></h5>
+     <form method="post" action="dropDrash">
+         <h5><span class="col-md-2"><button   type="submit" class="btn-link " id="drop-file" >Supprimer <i class="glyphicon glyphicon-remove text-danger"></i></button></span></h5>
+    <div class="clearfix">&nbsp;</div>
+    
+    <div class="col-md-12 row notification">
+        <?php if (sizeof($this->flashSession->getMessages(NULL, false)) > 0): ?>
+            <div><p><?php htmlspecialchars(($this->flashSession->output())) ?></p></div>
+        <?php endif; ?>
+    </div>
+    <div class="clearfix">&nbsp;</div>
+   
+    <div class="row ">
+        <div class="col-md-12">
+            <table class="table table-responsive table-striped ">
+                <!--thead class="table-striped">
+                <tr class="table-striped">
+                    <td> </td>
+                    <td><b>Description du fichier</b></td>
+                    <td><b>Nom fichier</b></td>
+                    <td><b>Type fichier</b></td>
+                    <td align="center"><b>taille</b></td>
+                    <td align="center"><b>T&eacute;l&eacute;charger</b></td>
+                    <td align="center"><b>supprimer</b></td>
+                </tr>
+                </thead-->
+                <tbody class="conten-corb">
+                <?php foreach ($corbeilles as $corbeille): ?>
+                    <tr class="table-striped">
+                        <td><input type="checkbox" name="allCheck[]" value="<?= $corbeille->idcorb ?>"></td>
+                        <td><?= $corbeille->description ?></td>
+                        <td><?= $corbeille->nomfile ?></td>
+                        <td><?= $corbeille->typefile ?></td>
+                        <td align="center"><?= $corbeille->taille ?> ko</td>
+                        <td align="center"><a href="<?= $this->url->getBaseUri() . "public/archives/" . $corbeille->nomfile ?>" ><span class="glyphicon glyphicon-cloud-download text-primary"></span></a></td>
+                        <td align="center"><a href="deleteCorbeille?id=<?= $corbeille->idcorb ?>" data-confirm="<?= $corbeille->description ?>"><span class="glyphicon glyphicon-remove text-danger"></span></a></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </form>
+</div>

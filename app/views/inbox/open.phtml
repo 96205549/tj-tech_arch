@@ -1,0 +1,65 @@
+<?php
+    if(!isset($docs)){
+        $docs=[];
+    }
+    if(!isset($docFiles)){
+        $docFiles=[];
+    }
+?>
+<div class="contain"> 
+    <h4 class="text-warning">contenu du dossier re&ccedil;u</h4>
+    <div class="clearfix">&nbsp;</div>
+   
+    <div class="clearfix">&nbsp;</div>
+    <div class="row">
+<div class="col-md-12">
+            <table class="table table-responsive table-striped table-hover ui-datatable" 
+                   data-global-search="false"
+                   data-length-change="true"
+                   data-info="true"
+                   data-paging="true"
+                   data-page-length="10"
+                   >
+                <thead class="table-responsive">
+                    <tr class="table-striped">
+                       
+                        <th></th>
+                        <th data-filterable="text" data-sortable="true"><b>Nom dossier/fichier</b></th>
+                        <th><b>file(s)</b></th>
+                        <th align='center'><b>ouvrir</b></th>
+                       
+                    </tr>
+                </thead>
+                <tbody class="table-responsive">
+                    <?php
+                    $i = 0;
+                    foreach ($docs as $child): $i++;
+                        $code = explode(",", $child->permission);
+
+                        ?>
+                        <tr class="table-striped">
+                           
+                            <td><b>&nbsp; <i class="fa fa-folder text-warning"></i> </b></td>
+                            <td><?= $child->nomdos ?></td>
+                            <td><?= "(" . count($child->fichier) . ")" ?></td>
+                            <td align="center"><a href="open?id=<?= base64_encode($child->iddos) ?>"><span class="glyphicon glyphicon-eye-open text-primary"></span></a></td>
+                              
+                          
+                        </tr>
+                    <?php endforeach; ?>
+
+                    <?php foreach ($docFiles as $file): $i++; ?>                        
+                     <tr class="table-striped">
+                          
+                            <td><b>&nbsp; <i class="fa fa-file text-primary"></i> </b></td>
+                            <td><?= $file->description ?></td>
+                            <td><?= $file->nomfile ?></td>
+                            <td align="center"><a href="file?id=<?= base64_encode($file->idfile) ?>" target="_blank"><span class="glyphicon glyphicon-eye-open text-primary"></span></a></td>
+                 
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
