@@ -167,7 +167,7 @@ function coup_word($param) {
                                     <?php endif; ?>
                                     <?php endforeach; ?>
 
-                                    {% if session.get('cont') ==1 %}
+                                    <?php if ($this->session->get('cont') == 1) { ?>
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
@@ -192,9 +192,9 @@ function coup_word($param) {
                                             </div>
                                         </div>
                                     </div>
-                                    {% endif %}
+                                    <?php } ?>
 
-                                    {% if session.get('sms') ==1 %}
+                                    <?php if ($this->session->get('sms') == 1) { ?>
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
@@ -224,8 +224,8 @@ function coup_word($param) {
                                             </div>
                                         </div>
                                     </div>
-                                    {% endif %}
-                                    {% if session.get('permission') ==1 %}
+                                    <?php } ?>
+                                    <?php if ($this->session->get('permission') == 1) { ?>
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
@@ -250,10 +250,10 @@ function coup_word($param) {
                                             </div>
                                         </div>
                                     </div>
-                                    {% endif %}
+                                    <?php } ?>
 
 
-                                    {% if session.get('systeme') == 1 %}
+                                    <?php if ($this->session->get('systeme') == 1) { ?>
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
@@ -278,10 +278,10 @@ function coup_word($param) {
                                             </div>
                                         </div>
                                     </div>
-                                    {% endif %}
+                                    <?php } ?>
 
 
-                                    {% if session.get('corbeille') ==1 %}
+                                    <?php if ($this->session->get('corbeille') == 1) { ?>
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
@@ -290,7 +290,7 @@ function coup_word($param) {
                                             </h4>
                                         </div>      
                                     </div>
-                                    {% endif %}
+                                    <?php } ?>
                                 </div>
 
 
@@ -299,7 +299,7 @@ function coup_word($param) {
                     </div>     
 
                     <div class="col-sm-10 bloc-left"> 
-                        {{ content() }}
+                        <?= $this->getContent() ?>
                     </div>     
                 </div>
             </div>

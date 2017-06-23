@@ -20,10 +20,12 @@ class MessageController extends Controller
         $this->tag->setTitle('Bienvenue');
         $corbeilles = corbeille:: find(['order' => ' idcorb DESC']);
         $contacts = contact:: find(['order' => ' id DESC']);
+        $groups = groupe:: find(['order' => ' idgroupe DESC']);
         $userid = $this->session->get('userid');
         $corbeilles = corbeille:: find(['iduser=' . $userid, 'order' => 'idcorb DESC']);
         $this->view->corbeilles = ($corbeilles) ? $corbeilles : [];
         $this->view->contacts = ($contacts) ? $contacts : [];
+        $this->view->groups = ($groups) ? $groups : [];
     }
 
     public function indexAction()
@@ -92,10 +94,6 @@ class MessageController extends Controller
                         echo "message envoyé avec success " . $result;
                     }
 
-
-
-
-
                     $i++;
                     //  }
                 }
@@ -117,6 +115,94 @@ class MessageController extends Controller
         $this->view->page = "message";
     }
 
+    public function smsGroupAction()
+    {
+        if (!$this->session->get('userid')) {
+            $this->response->redirect("session/logout");
+        }
+        
+        $models = modelesms::find();
+        $this->view->models = ($models) ? $models : [];
+
+        if ($this->request->isPost()) {
+            $this->view->disable();
+            $expediteur = $this->request->getPost("expediteur");
+            $dest = $this->request->getPost("destinataire");
+            /*die(print_r($dest));
+            return;*/
+            $message = $this->request->getPost("message");
+            //$destinataire = explode(";", $dest);
+           // die(print_r($destinataire[1]));
+            $size = sizeof($dest);
+            $modele = ($this->request->getPost("modelesms") ? "1" : "0");
+            $sendme = ($this->request->getPost("sendme") ? "1" : "0");
+            $iduser = $this->session->get('userid');
+
+            if (empty($expediteur)) {
+                $this->flashSession->error("l expediteur ne peut etre vide");
+            } elseif ($size==0) {
+                $this->flashSession->error("Veuillez choisir le groupe destinataire(s)");
+            } elseif (empty($message)) {
+                $this->flashSession->error("Saisissez le message a envoyer");
+            } else {
+
+                $i = 0;
+                foreach ($dest as $key => $value) {
+                    $datagroup=[];
+                    $datagroup = contact:: find(['idgroupe=:0:', 'bind' => ['0' => $value]]);
+                    foreach ($datagroup as $group):
+                    $newMessage = new sendsms();
+                    $newMessage->setExpediteur($expediteur);
+                    $newMessage->setDestinataire($group->mobile);
+                    $newMessage->setStatus("Envoyer");
+                    $newMessage->setDate(time());
+                    $newMessage->setMessage($message);
+                    $newMessage->setIduser($iduser);
+                    //  if ($newMessage->save()) {
+                    $newMessage->save();
+                    $login = "joezer";
+                    $pass = "96205549";
+                    $apikey = "987";
+                    $expediteur = str_replace(" ", "+", $expediteur);
+                    $destinataire = str_replace("+", "00", $group->mobile);
+                    // str_replace("+", "00", $value)
+                    $text = str_replace(" ", "+", $message);
+
+                    //die(print_r($destinataire));
+
+                    $link = "http://oceanicsms.com/api/http/sendmsg.php?" .
+                        "user=%s&password=%s&from=%s&to=%s&text=%s&api=%s";
+
+                    $result = file_get_contents(sprintf($link, $login, $pass, $expediteur, $destinataire, $text, $apikey));
+
+                    if (preg_match("/err/i", $result)) {
+                        echo "erreur lors de l'envoi du message: " . $result;
+                    } else {
+                        echo "message envoyé avec success " . $result;
+                    }
+                    endforeach;
+                    
+                    $i++;
+                    //  }
+                }
+                if ($size == $i) {
+                    if ($modele == 1) {
+                        $newModel = new modelesms();
+                        $newModel->setSms($message);
+                        $newModel->setDate(time());
+                        $newModel->setIduser($iduser);
+                        $newModel->save();
+                    }
+                    $this->flashSession->success("message envoye avec succes");
+                    $this->response->redirect("message/smsGroup");
+                } else {
+                    $this->flashSession->success("envoie de message echouer");
+                }
+            }
+        }
+        $this->view->page = "message";
+    }
+
     public function mesMessagesAction()
     {
         if (!$this->session->get('userid')) {
@@ -127,6 +213,13 @@ class MessageController extends Controller
         $this->view->page = "message";
     }
 
+    public function archivesSmsAction(){
+        
+        $this->view->page = "message";
+    }
+
+    
+
     public function notificationAction()
     {
         if (!$this->session->get('userid')) {
@@ -136,14 +229,14 @@ class MessageController extends Controller
 
         $messages = couriel::find(["iduser= :u:", "bind" => ['u' => 6]]);
         $totmsg = sizeof($messages);
-        $data =[];
-        $data["nbrmsg"]=$totmsg;
+        $data = [];
+        $data["nbrmsg"] = $totmsg;
         foreach ($messages as $message) {
-            $data["msg"]=$message->toArray();
-          
+            $data["msg"] = $message->toArray();
         }
         return json_encode($data);
-        
-        
     }
+    
+    
+    
 }

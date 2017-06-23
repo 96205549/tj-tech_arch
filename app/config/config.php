@@ -22,7 +22,7 @@ return new \Phalcon\Config(array(
         'rootDir'        => APP_PATH . '/public/archives/',
        // 'baseUri'        => 'http://172.168.1.3/',
       //  'baseUri'        => 'http://192.168.1.12/',
-        'baseUri'        => '/electroarchives/',
+        'baseUri'        => '/electra/',
         
     )
 ));

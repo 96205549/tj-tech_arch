@@ -36,32 +36,36 @@ if (!isset($messages)) {
                             </div>
                         </form>
                     </div>
+                    <form method="post" action="archivesSms">
                     <div class="clearfix">&nbsp;</div>
+                    <div class="row col-md-12"><button type="submit" class="btn-warning fa fa-archive">Archiver</button></div>
+                    <div class="clearfix">&nbsp;</div>
+                    
                     <div class="row table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example table responsive" >
                             <thead>
                                 <tr>
+                                    <th> </th>
                                     <th>De (exp&eacute;diteur)</th>
                                     <th>&Agrave; (destinataire)</th>
-                                    <th>Message</th>
-                                    <th>Ajout&eacute; le</th>
+                                    <th>Message</th>                                    
                                     <th>Envoy&eacute; le</th>
                                     <th>Statut</th>
-                                    <th>D&eacute;livr&eacute; le</th>
+                                    <th>Archiver</th>
                                    
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach ($messages as $message): ?>
                                     <tr class="gradeX">
+                                        <td><input type="checkbox" value="<?= $message->idsms ?>" name="zipsms[]"></td>
                                         <td><?= $message->expediteur ?></td>
                                         <td><?= $message->destinataire ?></td>
                                         <td><?= $message->message ?></td>
                                         <td><?= date("d-m-y",$message->date) ?></td>
-                                        <td><?= date("d-m-y",$message->date) ?></td>
                                         <td class="center"><?= $message->status ?></td>
                                         <td class="center">
-                                           <?= date("d-m-y",$message->date) ?>
+                                            <a href="smsArchive?code=<?= $message->idsms ?>" > Archiver</a>
                                         </td>
                                       
                                     </tr>
@@ -81,7 +85,7 @@ if (!isset($messages)) {
                             </tfoot>
                         </table>
                     </div>
-
+                    </form>
                 </div>
             </div>
         </div>
