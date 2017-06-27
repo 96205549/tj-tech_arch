@@ -80,7 +80,7 @@ $iduser = $this->session->get('userid');
                             <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
                         <?php if ($doc->iduser == $iduser): ?>
                             <td align="center">
-                                <a href="sharedoc?id=<? base64_encode($doc->iddos)  ?>" >                              
+                                <a href="sharedoc?id=<?= base64_encode($doc->iddos)  ?>" >                              
                                 <span class="fa fa-share-alt"></span></a>
                             </td>
                         <?php else: ?>
