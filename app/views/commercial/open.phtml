@@ -223,17 +223,17 @@ $permission = explode(",", $dossier->permission);
                             <td><?= "(" . count($child->fichier) . ")" ?></td>
                             <?php if (in_array("read", $code)  || (empty($child->permission)) && $this->session->get('userid') == $child->iduser) : ?>
                             <td align="center"><a href="open?id=<?= base64_encode($child->iddos) ?>"><span class="glyphicon glyphicon-eye-open text-primary"></span></a></td><?php else: ?>
-                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
+                                <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
                             <?php if(in_array("readWrite", $permission) && $dossier->iduser!= $iduser): if (in_array("readWrite", $code)  || (empty($child->permission)) && $this->session->get('userid') == $child->iduser) : ?>
                                 <td align="center"><a href="updateFolders?id=<?= base64_encode($child->iddos) ?>"><span class="glyphicon glyphicon-pencil text-warning"></span></a></td><?php else: ?>
-                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; elseif($dossier->iduser == $iduser): ?>
+                                <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; elseif($dossier->iduser == $iduser): ?>
                                 <td align="center"><a href="updateFolders?id=<?= base64_encode($child->iddos) ?>"><span class="glyphicon glyphicon-pencil text-warning"></span></a></td><?php else: ?>
-                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
+                                <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
                             <?php if(in_array("readWrite", $permission) && $dossier->iduser!= $iduser): if (in_array("readWrite", $code)  || (empty($child->permission)) && $this->session->get('userid') == $child->iduser) : ?>
                                 <td align="center"><a href="deleteFoldersO?id=<?= base64_encode($child->iddos) ?>" data-confirm="<?= $child->nomdos ?>"><span class="glyphicon glyphicon-trash text-danger"></span></a></td><?php else: ?>
-                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; elseif($dossier->iduser == $iduser): ?>
+                                <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; elseif($dossier->iduser == $iduser): ?>
                                 <td align="center"><a href="deleteFoldersO?id=<?= base64_encode($child->iddos) ?>" data-confirm="<?= $child->nomdos ?>"><span class="glyphicon glyphicon-trash text-danger"></span></a></td><?php else: ?>
-                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
+                                <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
                                  <?php if ($dossier->iduser == $iduser): ?>
                                 <td align="center"><a href="sharedoc?id=<?= base64_encode($child->iddos) ?>"><span class="fa fa-share-alt"></span></a></td>
                                  <?php endif; ?>
@@ -251,22 +251,22 @@ $permission = explode(",", $dossier->permission);
                             
                               <?php if(in_array("read", $permission) && $dossier->iduser!= $iduser): if (in_array("read", $code)  || (empty($file->permission)) && $this->session->get('userid') == $file->iduser) : ?>
                                 <td align="center"><a href="<?= $this->url->get("document/open?id=".base64_encode($file->idfile))?>" target="_blank"><span class="glyphicon glyphicon-eye-open text-primary"></span></a></td><?php else: ?>
-                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; elseif($dossier->iduser == $iduser): ?>
+                                <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; elseif($dossier->iduser == $iduser): ?>
                                 <td align="center"><a href="<?= $this->url->get("document/open?id=".base64_encode($file->idfile))?>" target="_blank"><span class="glyphicon glyphicon-eye-open text-primary"></span></a></td><?php else: ?>
-                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
+                                <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
                             
                            
                            
                              <?php if(in_array("readWrite", $permission) && $dossier->iduser!= $iduser): if (in_array("readWrite", $code)  || (empty($file->permission)) && $this->session->get('userid') == $file->iduser) : ?>
                                 <td align="center"><a href="updateFiles?id=<?= base64_encode($file->idfile) . '.' . base64_encode($dossier->iddos) ?>"><span class="glyphicon glyphicon-pencil text-warning"></span></a></td><?php else: ?>
-                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; elseif($dossier->iduser == $iduser): ?>
+                                <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; elseif($dossier->iduser == $iduser): ?>
                                 <td align="center"><a href="updateFiles?id=<?= base64_encode($file->idfile) . '.' . base64_encode($dossier->iddos) ?>"><span class="glyphicon glyphicon-pencil text-warning"></span></a></td><?php else: ?>
-                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>    
+                                <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>    
                              <?php if(in_array("readWrite", $permission) && $dossier->iduser!= $iduser): if (in_array("readWrite", $code)  || (empty($file->permission)) && $this->session->get('userid') == $file->iduser) : ?>
                                 <td align="center"><a href="deleteFilesO?id=<?= base64_encode($file->idfile) ?>" data-confirm="<?= $file->description ?>"><span class="glyphicon glyphicon-trash text-danger"></span></a></td><?php else: ?>
-                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; elseif($dossier->iduser == $iduser): ?>
+                                <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; elseif($dossier->iduser == $iduser): ?>
                                 <td align="center"><a href="deleteFilesO?id=<?= base64_encode($file->idfile) ?>" data-confirm="<?= $file->description ?>"><span class="glyphicon glyphicon-trash text-danger"></span></a></td><?php else: ?>
-                                <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>  
+                                <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>  
                                  <?php if ($dossier->iduser == $iduser): ?>
                                 <td align="center"><a href="sharefile?id=<?= base64_encode($file->idfile) ?>" ><span class="fa fa-share-alt"></span></a></td>
                                  <?php endif; ?>
