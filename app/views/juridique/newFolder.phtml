@@ -2,7 +2,8 @@
 if (!isset($dossiers)) {
     $dossiers = [];
 }
-$iduser= $this->session->get('userid');
+$iduser = $this->session->get('userid');
+
 ?>
 <div class="contain">
     <h4 class="text-warning">Nouveau dossier</h4>
@@ -71,17 +72,20 @@ $iduser= $this->session->get('userid');
                         <td><?= $doc->nomdos ?></td>
                         <td><?= "(" . count($doc->fichier) . ")" ?></td>
                         <?php if (in_array("read", $code) || (empty($doc->permission)) && $this->session->get('userid') == $doc->iduser) : ?><td align="center"><a href="openFolder?id=<?= base64_encode($doc->iddos) ?>"><span class="glyphicon glyphicon-eye-open text-primary"></span></a></td><?php else: ?>
-                            <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
+                            <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
                         <?php if (in_array("readWrite", $code) || (empty($doc->permission)) && $this->session->get('userid') == $doc->iduser) : ?>
                             <td align="center"><a href="updateFolder?id=<?= base64_encode($doc->iddos) ?>"><span class="glyphicon glyphicon-pencil text-warning"></span></a></td><?php else: ?>
-                            <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
+                            <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
                         <?php if (in_array("readWrite", $code) || (empty($doc->permission)) && $this->session->get('userid') == $doc->iduser) : ?><td align="center"><a href="deleteFolderPn?id=<?= base64_encode($doc->iddos) ?>" data-confirm="<?= $doc->nomdos ?>"><span class="glyphicon glyphicon-trash text-danger"></span></a></td><?php else: ?>
-                            <td>&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
-                            <?php if($doc->iduser == $iduser): ?>
-                            <td align="center"><a href="sharedoc?id=<?= base64_encode($doc->iddos) ?>" ><span class="fa fa-share-alt text-primary"></span></a></td>
-                            <?php else: ?>
-                            <td>&nbsp;<i class="fa fa-lock text-danger"></i></td>
-                        <?php endif; ?>
+                            <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
+                        <?php if ($doc->iduser == $iduser): ?>
+                            <td align="center">
+                                <a href="sharedoc?id=<? base64_encode($doc->iddos)  ?>" >                              
+                                <span class="fa fa-share-alt"></span></a>
+                            </td>
+                        <?php else: ?>
+                            <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td>
+                            <?php endif; ?>
                     </tr>
                 <?php endforeach; ?>
 

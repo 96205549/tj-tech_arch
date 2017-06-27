@@ -21,8 +21,8 @@ return new \Phalcon\Config(array(
         'cacheDir'       => APP_PATH . '/app/cache/',
         'rootDir'        => APP_PATH . '/public/archives/',
        // 'baseUri'        => 'http://172.168.1.3/',
-      //  'baseUri'        => 'http://192.168.1.12/',
-        'baseUri'        => '/electra/',
+        'baseUri'        => 'http://192.168.43.116/',
+        //'baseUri'        => '/electra/',
         
     )
 ));
