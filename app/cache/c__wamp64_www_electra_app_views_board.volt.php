@@ -217,9 +217,14 @@ function coup_word($param) {
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <span class="glyphicon glyphicon-envelope"></span><a href="<?= $this->url->get("message/mesMessages"); ?>"> Boite d&apos;envoie</a>
+                                                            <span class="glyphicon glyphicon-envelope"></span><a href="<?= $this->url->get("message/mesMessages"); ?>"> historique sms</a>
                                                         </td>
                                                     </tr>     
+                                                    <!--tr>
+                                                        <td>
+                                                            <span class="glyphicon glyphicon-book"></span><a href="<?// $this->url->get("message/backupsms"); ?>"> sms archiver</a>
+                                                        </td>
+                                                    </tr-->     
                                                 </table>
                                             </div>
                                         </div>

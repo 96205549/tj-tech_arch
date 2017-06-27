@@ -120,7 +120,7 @@ class MessageController extends Controller
         if (!$this->session->get('userid')) {
             $this->response->redirect("session/logout");
         }
-        
+
         $models = modelesms::find();
         $this->view->models = ($models) ? $models : [];
 
@@ -128,11 +128,11 @@ class MessageController extends Controller
             $this->view->disable();
             $expediteur = $this->request->getPost("expediteur");
             $dest = $this->request->getPost("destinataire");
-            /*die(print_r($dest));
-            return;*/
+            /* die(print_r($dest));
+              return; */
             $message = $this->request->getPost("message");
             //$destinataire = explode(";", $dest);
-           // die(print_r($destinataire[1]));
+            // die(print_r($destinataire[1]));
             $size = sizeof($dest);
             $modele = ($this->request->getPost("modelesms") ? "1" : "0");
             $sendme = ($this->request->getPost("sendme") ? "1" : "0");
@@ -140,7 +140,7 @@ class MessageController extends Controller
 
             if (empty($expediteur)) {
                 $this->flashSession->error("l expediteur ne peut etre vide");
-            } elseif ($size==0) {
+            } elseif ($size == 0) {
                 $this->flashSession->error("Veuillez choisir le groupe destinataire(s)");
             } elseif (empty($message)) {
                 $this->flashSession->error("Saisissez le message a envoyer");
@@ -148,40 +148,40 @@ class MessageController extends Controller
 
                 $i = 0;
                 foreach ($dest as $key => $value) {
-                    $datagroup=[];
+                    $datagroup = [];
                     $datagroup = contact:: find(['idgroupe=:0:', 'bind' => ['0' => $value]]);
                     foreach ($datagroup as $group):
-                    $newMessage = new sendsms();
-                    $newMessage->setExpediteur($expediteur);
-                    $newMessage->setDestinataire($group->mobile);
-                    $newMessage->setStatus("Envoyer");
-                    $newMessage->setDate(time());
-                    $newMessage->setMessage($message);
-                    $newMessage->setIduser($iduser);
-                    //  if ($newMessage->save()) {
-                    $newMessage->save();
-                    $login = "joezer";
-                    $pass = "96205549";
-                    $apikey = "987";
-                    $expediteur = str_replace(" ", "+", $expediteur);
-                    $destinataire = str_replace("+", "00", $group->mobile);
-                    // str_replace("+", "00", $value)
-                    $text = str_replace(" ", "+", $message);
+                        $newMessage = new sendsms();
+                        $newMessage->setExpediteur($expediteur);
+                        $newMessage->setDestinataire($group->mobile);
+                        $newMessage->setStatus("Envoyer");
+                        $newMessage->setDate(time());
+                        $newMessage->setMessage($message);
+                        $newMessage->setIduser($iduser);
+                        //  if ($newMessage->save()) {
+                        $newMessage->save();
+                        $login = "joezer";
+                        $pass = "96205549";
+                        $apikey = "987";
+                        $expediteur = str_replace(" ", "+", $expediteur);
+                        $destinataire = str_replace("+", "00", $group->mobile);
+                        // str_replace("+", "00", $value)
+                        $text = str_replace(" ", "+", $message);
 
-                    //die(print_r($destinataire));
+                        //die(print_r($destinataire));
 
-                    $link = "http://oceanicsms.com/api/http/sendmsg.php?" .
-                        "user=%s&password=%s&from=%s&to=%s&text=%s&api=%s";
+                        $link = "http://oceanicsms.com/api/http/sendmsg.php?" .
+                            "user=%s&password=%s&from=%s&to=%s&text=%s&api=%s";
 
-                    $result = file_get_contents(sprintf($link, $login, $pass, $expediteur, $destinataire, $text, $apikey));
+                        $result = file_get_contents(sprintf($link, $login, $pass, $expediteur, $destinataire, $text, $apikey));
 
-                    if (preg_match("/err/i", $result)) {
-                        echo "erreur lors de l'envoi du message: " . $result;
-                    } else {
-                        echo "message envoyé avec success " . $result;
-                    }
+                        if (preg_match("/err/i", $result)) {
+                            echo "erreur lors de l'envoi du message: " . $result;
+                        } else {
+                            echo "message envoyé avec success " . $result;
+                        }
                     endforeach;
-                    
+
                     $i++;
                     //  }
                 }
@@ -208,17 +208,70 @@ class MessageController extends Controller
         if (!$this->session->get('userid')) {
             $this->response->redirect("session/logout");
         }
-        $messages = sendsms::find(['order' => ' idsms DESC']);
+        $messages = sendsms::find([' archiver=:val:  order by idsms DESC', 'bind' => ['val'=> "0"]]);
         $this->view->messages = ($messages) ? $messages : [];
         $this->view->page = "message";
     }
 
-    public function archivesSmsAction(){
-        
-        $this->view->page = "message";
-    }
+    /*
+     * archivage de plusieurs ligne de sms cocher
+     */
+    public function archivesSmsAction()
+    {
 
-    
+        if ($this->request->isPost()) {
+            $historiquesms = $this->request->getPost('zipsms');
+            //die(print_r($historiquesms));
+            $taille = sizeof($historiquesms);
+            if ($taille > 0) {
+                $i = 0;
+                foreach ($historiquesms as $key => $sms) {
+                    $lignMsg = sendsms::findFirst($sms);
+                    $lignMsg->archiver="1";
+                    $lignMsg->save();
+                    $i++;
+                }
+                if ($i == $historiquesms) {
+                    //$this->flashSession->success("messges archiver avec succ&egrave;s");
+                }
+            } else {
+                $this->flashSession->error("Veuillez cohez les messges � archiver");
+                
+            }
+        }
+        $this->response->redirect("message/mesMessages");
+        $this->view->page = "message";
+        
+    }
+    /*
+     * archivage d'une seul ligne sms
+     */
+    public function onlySmsAction()
+    {
+        if (!$this->session->get('userid')) {
+           return $this->response->redirect("session/logout");
+        }
+        
+        $code = base64_decode($this->request->get('code'));
+        
+           if((int)$code)
+           {
+                    $lignMsg = sendsms::findFirst($code);
+                    $lignMsg->archiver="1";
+                   $true= $lignMsg->save();
+                   
+              
+                if ($true) {
+                   // $this->flashSession->success("messges archiver avec succ&egrave;s");
+                }
+           }else{
+               $this->response->redirect("message/404");
+           }
+        
+        $this->response->redirect("message/mesMessages");
+        $this->view->page = "message";
+        
+    }
 
     public function notificationAction()
     {
@@ -236,7 +289,4 @@ class MessageController extends Controller
         }
         return json_encode($data);
     }
-    
-    
-    
 }

@@ -21,6 +21,7 @@ class sendsms extends Model
     private $status;
     private $date;
     private $iduser;
+    private $archiver;
     
     
     /*
@@ -61,6 +62,11 @@ class sendsms extends Model
         return $this->iduser;
     }
 
+     function getArchiver()
+    {
+        return $this->archiver;
+    }
+
     /*
      * declaration des setters
      */
@@ -99,6 +105,11 @@ class sendsms extends Model
         $this->iduser = $iduser;
     }
     
+      function setArchiver($archiver)
+    {
+        $this->archiver = $archiver;
+    }
+
      public function initialize()
     {
         /*
