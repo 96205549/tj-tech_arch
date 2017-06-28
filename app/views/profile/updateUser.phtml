@@ -24,7 +24,7 @@ $supprimer = $this->session->get('sup');
 
 
         <span class="clearfix">&nbsp;</span>
-        <form method="post" action="updateUser?id=<?= $users->iduser ?>">
+        <form method="post" action="updateUser?id=<?= base64_encode($users->iduser) ?>">
             <div class="col-md-12">
                 <table class="table table-responsive">
                     <tr class="table-striped">
@@ -79,13 +79,13 @@ $supprimer = $this->session->get('sup');
         <form method="post" action="pass?id= <?= $users->iduser ?>">
             <table class="table table-responsive">
                 <tr class="table-striped">
-                    <td>nouveau mot de passe:</td><td><input type='text' class="form-control" name='newpass'></td>
+                    <td>nouveau mot de passe:</td><td><input type='password' class="form-control" name='newpass'></td>
                 </tr>
                 <tr class="table-striped">
-                    <td>confirm password:</td><td><input type='text' class="form-control" name='confirmpass'></td>
+                    <td>confirm password:</td><td><input type='password' class="form-control" name='confirmpass' onkeypress="count()"></td>
                 </tr>
                 <tr>
-                    <td>ancien mot de password:</td><td><input type='text' class="form-control" name='lastpass'></td>
+                    <td>ancien mot de password:</td><td><input type='password' class="form-control" name='lastpass'></td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>

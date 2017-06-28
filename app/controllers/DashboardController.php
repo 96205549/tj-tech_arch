@@ -50,8 +50,8 @@ class DashboardController extends Controller
 
     public function settingsAction()
     {
-        if (!$this->session->get('userid')) {
-            $this->response->redirect("session/logout");
+       if (!$this->session->get('userid') || $this->session->get("systeme") == "0") {
+           return $this->response->redirect("session/logout");
         }
 //       $conf = settings::find(["data='electra'"]);
         $param = settings::findFirst(["data='electra'"]);

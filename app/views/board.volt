@@ -274,11 +274,11 @@ function coup_word($param) {
                                                             <span class="glyphicon glyphicon-user"></span><a href="<?= $this->url->get("dashboard/settings"); ?>"> Systeme</a>
                                                         </td>
                                                     </tr>
-                                                    <!--tr>
+                                                    <tr>
                                                         <td>
-                                                            <span class="glyphicon glyphicon-user"></span><a href="#"> Utilisateur</a>
+                                                            <span class="glyphicon glyphicon-stats"></span><a href="#"> Compte Sms</a>
                                                         </td>
-                                                    </tr-->     
+                                                    </tr>     
                                                 </table>
                                             </div>
                                         </div>

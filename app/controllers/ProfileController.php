@@ -16,6 +16,9 @@ class ProfileController extends Controller
 
     public function initialize()
     {
+        if (!$this->session->get('userid') || $this->session->get("permission") == "0") {
+           return $this->response->redirect("session/logout");
+        }
         $this->view->setMainView('board');
         $this->tag->setTitle('Bienvenue');
         $corbeilles = corbeille:: find(['order'=>' idcorb DESC']);
@@ -24,15 +27,15 @@ class ProfileController extends Controller
 
     public function indexAction()
     {
-         if(!$this->session->get('userid')){
-             $this->response->redirect("session/logout");
+        if (!$this->session->get('userid') || $this->session->get("permission") == "0") {
+           return $this->response->redirect("session/logout");
         }
     }
 
     public function newProfileAction()
     {
-         if(!$this->session->get('userid')){
-             $this->response->redirect("session/logout");
+         if (!$this->session->get('userid') || $this->session->get("permission") == "0") {
+           return $this->response->redirect("session/logout");
         }
         $sevices = service::find();
         $profils = profile::find();
@@ -59,11 +62,11 @@ class ProfileController extends Controller
 
     public function updateAction()
     {
-         if(!$this->session->get('userid')){
-             $this->response->redirect("session/logout");
+         if (!$this->session->get('userid') || $this->session->get("permission") == "0") {
+           return $this->response->redirect("session/logout");
         }
-        $id = $this->request->get("id");
-        ((int) $id) ? $id = $this->request->get('id') : $this->response->redirect("profile/newProfile");
+        $id = base64_decode($this->request->get("id"));
+        ((int) $id) ? $id = base64_decode($this->request->get('id')) : $this->response->redirect("profile/newProfile");
 
         $profil = profile::findFirstByIdprofile($id);
         $keyword = service::find();
@@ -90,11 +93,11 @@ class ProfileController extends Controller
 
     public function deleteAction()
     {
-         if(!$this->session->get('userid')){
-             $this->response->redirect("session/logout");
+         if (!$this->session->get('userid') || $this->session->get("permission") == "0") {
+           return $this->response->redirect("session/logout");
         }
-        $id = $this->request->get("id");
-        ((int) $id) ? $id = $this->request->get('id') : $this->response->redirect("profile/newProfile");
+        $id = base64_decode($this->request->get("id"));
+        ((int) $id) ? $id = base64_decode($this->request->get('id')) : $this->response->redirect("profile/newProfile");
         $profil = profile::findFirstByIdprofile($id);
 
         if ($profil) {
@@ -107,8 +110,8 @@ class ProfileController extends Controller
 
     public function newUserAction()
     {
-         if(!$this->session->get('userid')){
-             $this->response->redirect("session/logout");
+        if (!$this->session->get('userid') || $this->session->get("permission") == "0") {
+           return $this->response->redirect("session/logout");
         }
         $profils = profile::find();
         $this->view->profils = ($profils) ? $profils : [];
@@ -159,14 +162,14 @@ class ProfileController extends Controller
 
     public function updateUserAction()
     {
-         if(!$this->session->get('userid')){
-             $this->response->redirect("session/logout");
+          if (!$this->session->get('userid') || $this->session->get("permission") == "0") {
+           return $this->response->redirect("session/logout");
         }
         $profils = profile::find();
         $this->view->profils = $profils;
 
-        $id = $this->request->get('id');
-        ((int) $id) ? $id = $this->request->get('id') : $this->response->redirect("profile/newUser");
+        $id = base64_decode($this->request->get('id'));
+        ((int) $id) ? $id = base64_decode($this->request->get('id')) : $this->response->redirect("profile/newUser");
 
         $users = user::findFirstByIduser($id);
         if($users == FALSE){
@@ -210,8 +213,8 @@ class ProfileController extends Controller
     public function passAction()
     {
 
-         if(!$this->session->get('userid')){
-             $this->response->redirect("session/logout");
+          if (!$this->session->get('userid') || $this->session->get("systeme") == "0") {
+           return $this->response->redirect("session/logout");
         }
         $id = $this->request->get('id');
         ((int) $id) ? $id = $this->request->get('id') : $this->response->redirect("profile/newUser");
@@ -228,15 +231,15 @@ class ProfileController extends Controller
                         $user->setPassword(sha1($newpass));
                         if ($user->save()) {
                             $this->flashSession->success("le mot de passe de l utilisateur a ete changer avec succes");
-                            $this->response->redirect("profile/updateUser?id=" . $id);
+                            $this->response->redirect("profile/updateUser?id=" . base64_encode($id));
                         }
                     } else {
                         $this->flashSession->success("l ancien mot de passe est incorrect");
-                        $this->response->redirect("profile/updateUser?id=" . $id);
+                        $this->response->redirect("profile/updateUser?id=" . base64_encode($id));
                     }
                 } else {
                     $this->flashSession->error("les mot de passe ne sont pas conforme");
-                    $this->response->redirect("profile/updateUser?id=" . $id);
+                    $this->response->redirect("profile/updateUser?id=" . base64_encode($id));
                 }
             } else {
                 /*
@@ -251,11 +254,11 @@ class ProfileController extends Controller
     
     public function deleteUserAction()
     {
-         if(!$this->session->get('userid')){
-             $this->response->redirect("session/logout");
+          if (!$this->session->get('userid') || $this->session->get("systeme") == "0") {
+           return $this->response->redirect("session/logout");
         }
-        $id = $this->request->get("id");
-        ((int) $id) ? $id = $this->request->get('id') : $this->response->redirect("profile/newUser");
+        $id = base64_decode($this->request->get("id"));
+        ((int) $id) ? $id = base64_decode($this->request->get('id')) : $this->response->redirect("profile/newUser");
         $user = user::findFirstByIduser($id);
 
         if ($user) {

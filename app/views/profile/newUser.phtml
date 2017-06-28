@@ -101,8 +101,8 @@ $supprimer= $this->session->get('sup');
                     <td align="center"><?= $user->pseudo ?></td>
                     <td align="center"><?= $user->email ?></td>
                     <td align="center"><?= $user->profile->nomprofile ?></td>
-                    <td align="center"><a href="updateUser?id=<?= $user->iduser ?>"><span class="glyphicon glyphicon-pencil text-warning"></span></a></td>
-                    <td align="center"><a href='deleteUser?id=<?= $user->iduser ?>' data-confirm="<?= $user->fulname ?>"><span class="glyphicon glyphicon-remove text-danger"></span></a></td>                    
+                    <td align="center"><a href="updateUser?id=<?= base64_encode($user->iduser) ?>"><span class="glyphicon glyphicon-pencil text-warning"></span></a></td>
+                    <td align="center"><a href='deleteUser?id=<?= base64_encode($user->iduser) ?>' data-confirm="<?= $user->fulname ?>"><span class="glyphicon glyphicon-remove text-danger"></span></a></td>                    
                 </tr>
                 <?php endforeach; ?>
             </table>
