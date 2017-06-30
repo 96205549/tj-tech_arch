@@ -11,7 +11,7 @@
  */
 use Phalcon\Mvc\Controller;
 
-class ProfileController extends Controller
+class profileController extends Controller
 {
 
     public function initialize()
@@ -91,6 +91,9 @@ class ProfileController extends Controller
          $this->view->page = "permission";
     }
 
+    /*
+     * code de suppression des profiles utilisateurs
+     */
     public function deleteAction()
     {
          if (!$this->session->get('userid') || $this->session->get("permission") == "0") {
@@ -101,6 +104,19 @@ class ProfileController extends Controller
         $profil = profile::findFirstByIdprofile($id);
 
         if ($profil) {
+            /*
+             * code de suppression de tous les utilisateurs liées au profile
+             */
+            $users = user::find(["idprofile=:val:", 'bind'=>["val"=>$profil->idprofile]]);
+            
+            if($users){
+                foreach ($users as $key => $user) {
+                    $user->delete();
+                }                
+            }
+            /*
+             * code de suppression du profile
+             */
             if ($profil->delete()) {
                 $this->response->redirect("profile/newProfile");
             }
@@ -108,6 +124,9 @@ class ProfileController extends Controller
          $this->view->page = "permission";
     }
 
+    /*
+     * code de création d'un nouvel utilisateur
+     */
     public function newUserAction()
     {
         if (!$this->session->get('userid') || $this->session->get("permission") == "0") {
@@ -160,6 +179,9 @@ class ProfileController extends Controller
          $this->view->page = "permission";
     }
 
+    /*
+     * code de modification d'un utilisateur 
+     */
     public function updateUserAction()
     {
           if (!$this->session->get('userid') || $this->session->get("permission") == "0") {

@@ -21,10 +21,12 @@ class couriel extends Model
     private $iduser;
     private $actif;
     private $lu;
-    
+    private $date;
    
-
-        function getType()
+    /*
+     * declaration des getters 
+     */
+    function getType()
     {
         return $this->type;
     }
@@ -34,7 +36,7 @@ class couriel extends Model
         $this->type = $type;
     }
 
-        function getIdcouriel()
+    function getIdcouriel()
     {
         return $this->idcouriel;
     }
@@ -49,8 +51,6 @@ class couriel extends Model
         return $this->iddos;
     }
 
-   
-
     function getIduser()
     {
         return $this->iduser;
@@ -60,11 +60,23 @@ class couriel extends Model
     {
         return $this->actif;
     }
-     function getLu()
+
+    function getLu()
     {
         return $this->lu;
     }
 
+    function getDate()
+    {
+        return $this->date;
+    }
+
+   
+    
+    /*
+     * declaration des setters
+     */
+    
     function setIdcouriel($idcouriel)
     {
         $this->idcouriel = $idcouriel;
@@ -80,7 +92,6 @@ class couriel extends Model
         $this->iddos = $iddos;
     }
 
-   
     function setIduser($iduser)
     {
         $this->iduser = $iduser;
@@ -90,11 +101,17 @@ class couriel extends Model
     {
         $this->actif = $actif;
     }
-    
+
     function setLu($lu)
     {
         $this->lu = $lu;
     }
+
+    function setDate($date)
+    {
+        $this->date = $date;
+    }
+
 
     public function initialize()
     {

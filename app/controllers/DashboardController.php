@@ -333,4 +333,13 @@ class DashboardController extends Controller
             return json_encode($reponse);
         }
     }
+    
+    public function compteSmsAction(){
+        if (!$this->session->get('userid') || $this->session->get("systeme") == "0") {
+           return $this->response->redirect("session/logout");
+        }
+        
+        $this->view->page="settings";
+        
+    }
 }

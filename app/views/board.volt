@@ -228,8 +228,33 @@ function coup_word($param) {
                                                 </table>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>                      
                                     {% endif %}
+                                     <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseHeight"><span class="glyphicon glyphicon-comment text-warning">
+                                                    </span> Couriel</a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseHeight" class="panel-collapse collapse <?= ($page == "couriel")? "in active" : "" ?>">
+                                            <div class="panel-body">
+                                                <table class="table">
+                                                    <tr>
+                                                        <td>
+                                                            <span class="glyphicon glyphicon-chevron-right"></span><a href="<?= $this->url->get("couriel/send"); ?>"> Bo&icirc;te d&apos;envoie</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span class="glyphicon glyphicon-check"></span><a href="<?= $this->url->get("couriel/recu"); ?>"> Bo&icirc;te de reception</a>
+                                                        </td>
+                                                    </tr>
+                                                      
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
                                     {% if session.get('permission') ==1 %}
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
@@ -276,7 +301,7 @@ function coup_word($param) {
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <span class="glyphicon glyphicon-stats"></span><a href="#"> Compte Sms</a>
+                                                            <span class="glyphicon glyphicon-stats"></span><a href="<?= $this->url->get("dashboard/compteSms"); ?>"> Compte Sms</a>
                                                         </td>
                                                     </tr>     
                                                 </table>

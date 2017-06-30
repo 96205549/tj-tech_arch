@@ -20,8 +20,8 @@ return new \Phalcon\Config(array(
         'libraryDir'     => APP_PATH . '/app/library/',
         'cacheDir'       => APP_PATH . '/app/cache/',
         'rootDir'        => APP_PATH . '/public/archives/',
-       // 'baseUri'        => 'http://172.168.1.3/',
         'baseUri'        => 'http://192.168.43.116/',
+        //'baseUri'        => 'http://192.168.56.1/',
         //'baseUri'        => '/electra/',
         
     )
