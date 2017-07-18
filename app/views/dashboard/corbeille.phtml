@@ -20,18 +20,14 @@ if (!isset($corbeilles)) {
    
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-responsive table-striped ">
-                <!--thead class="table-striped">
-                <tr class="table-striped">
-                    <td> </td>
-                    <td><b>Description du fichier</b></td>
-                    <td><b>Nom fichier</b></td>
-                    <td><b>Type fichier</b></td>
-                    <td align="center"><b>taille</b></td>
-                    <td align="center"><b>T&eacute;l&eacute;charger</b></td>
-                    <td align="center"><b>supprimer</b></td>
-                </tr>
-                </thead-->
+            <div class="container-fluid container-fixed-lg bg-white">
+            <!-- START PANEL -->
+            <div class="panel panel-transparent">
+            
+             <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-hover" id="basicTable">
+               
                 <tbody class="conten-corb">
                 <?php foreach ($corbeilles as $corbeille): ?>
                     <tr class="table-striped">
@@ -46,6 +42,10 @@ if (!isset($corbeilles)) {
                 <?php endforeach; ?>
                 </tbody>
             </table>
+                </div>
+             </div>
+            </div>
+            </div>
         </div>
     </div>
     </form>

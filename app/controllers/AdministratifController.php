@@ -1005,6 +1005,8 @@ class AdministratifController extends Controller
                 $courier->iddos = $id;
                 $courier->type = $type;
                 $courier->iduser = $value;
+                 $courier->date = date("Y-m-d H:i:s") ;
+                $courier->exp = $iduser;
                 $courier->save();
                 $i++;
             }

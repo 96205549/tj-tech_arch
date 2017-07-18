@@ -49,6 +49,7 @@ function coup_word($param) {
         <link href="<?= $this->url->getBaseUri(); ?>public/css/dataTables.bootstrap.css" rel="stylesheet">
         <link href="<?= $this->url->getBaseUri(); ?>public/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
         <link href="<?= $this->url->getBaseUri(); ?>public/vendor/bootstrap-toggle/css/bootstrap-toggle.min.css" rel="stylesheet">
+        
         <script type="text/javascript">
             //<!--
             document.oncontextmenu = new Function("return false");
@@ -80,11 +81,11 @@ function coup_word($param) {
                                             <li>
                                                 <a href="<?= ($message->type=="doc")? $this->url->get("inbox/doc?id=". base64_encode($message->iddos)."_".base64_encode($message->idcouriel)) : $this->url->get("inbox/file?id=". base64_encode($message->iddos)."_".base64_encode($message->idcouriel)) ?>">
                                                     <div class="col-sm-1 small-text">
-                                                        <i class="fa fa-user text-primary">&nbsp; Albert</i>
+                                                        <i class="fa fa-user text-primary">&nbsp; <?= $message->user->getFulname() ?></i>
                                                     </div>
                                                     <div class="col-sm-12 small-text" id="msgCount">
                                                         <p class="small-text">
-                                                            <font style="font-size:8px;"><?= coup_word($message->message."geg sgsdgs gdsgshdfh   ssdsddgsd"); ?> </font> 
+                                                            <font style="font-size:8px;"><?= coup_word($message->message); ?> </font> 
                                                         </p>
                                                     </div>
 

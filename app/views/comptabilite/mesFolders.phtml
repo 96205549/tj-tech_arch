@@ -15,41 +15,54 @@ if (!isset($dossiers)) {
     <div class="clearfix">&nbsp;</div>
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-responsive table-striped table-bordered table-hover ui-datatable" 
-                   data-global-search="false"
-                   data-length-change="true"
-                   data-info="true"
-                   data-paging="true"
-                   data-page-length="10"
-                   >
-                <thead class="table-responsive">
-                    <tr class="table-striped">
-                        <th></th>
-                        <th><b>N&deg;</b></th>
-                        <th data-filterable="text" data-sortable="true"><b>Nom dossier</b></th>
-                        <th><b>file(s)</b></th>
-                        <th align='center'><b>ouvrir</b></th>
-                        <th align='center'><b>supprimer</b></th>
-                    </tr>
-                </thead>
-                <tbody class="table-responsive">
-                    <?php $i = 0;
-                    foreach ($dossiers as $doc): $i++;
-                        $code = explode(",", $doc->permission);
-                        ?>
-                        <tr class="table-striped">
-                            <td><input type="checkbox"></td>
-                            <td><b><?= $i ?> &nbsp;<i class="fa fa-folder-open text-warning"></i></b></td>
-                            <td ><?= $doc->nomdos ?></td>
-                            <td><?= "(" . count($doc->fichier) . ")" ?></td>
-                            <?php if (in_array("read", $code) || (empty($doc->permission)) && $this->session->get('userid') == $doc->iduser) : ?><td align="center"><a href="open?id=<?= base64_encode($doc->iddos) ?>"><span class="glyphicon glyphicon-eye-open text-primary"></span></a></td><?php else: ?>
-                                <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
-                        <?php if (in_array("readWrite", $code) || (empty($doc->permission)) && $this->session->get('userid') == $doc->iduser) : ?><td align="center"><a href="deleteFolderM?id=<?= base64_encode($doc->iddos) ?>" data-confirm="<?= $doc->nomdos ?>"><span class="glyphicon glyphicon-trash text-danger"></span></a></td><?php else: ?>
-                        <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+            <div class="container-fluid container-fixed-lg bg-white">
+                <!-- START PANEL -->
+                <div class="panel panel-transparent">
+
+                    <div class="panel-body">
+                        <div class="table-responsive col-md-12">
+
+                            <table class="table table-responsive table-bordered table-hover ui-datatable" 
+                                   data-global-search="false"
+                                   data-length-change="true"
+                                   data-info="true"
+                                   data-paging="true"
+                                   data-page-length="10"
+                                   >
+                                <thead class="table-responsive">
+                                    <tr class="table-striped">
+                                        <th></th>
+                                        <th><b>N&deg;</b></th>
+                                        <th data-filterable="text" data-sortable="true"><b>Nom dossier</b></th>
+                                        <th><b>file(s)</b></th>
+                                        <th align='center'><b>ouvrir</b></th>
+                                        <th align='center'><b>supprimer</b></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-responsive">
+                                    <?php
+                                    $i = 0;
+                                    foreach ($dossiers as $doc): $i++;
+                                        $code = explode(",", $doc->permission);
+
+                                        ?>
+                                        <tr class="table-striped">
+                                            <td><input type="checkbox"></td>
+                                            <td><b><?= $i ?> &nbsp;<i class="fa fa-folder-open text-warning"></i></b></td>
+                                            <td ><?= $doc->nomdos ?></td>
+                                            <td><?= "(" . count($doc->fichier) . ")" ?></td>
+                                            <?php if (in_array("read", $code) || (empty($doc->permission)) && $this->session->get('userid') == $doc->iduser) : ?><td align="center"><a href="open?id=<?= base64_encode($doc->iddos) ?>"><span class="glyphicon glyphicon-eye-open text-primary"></span></a></td><?php else: ?>
+                                                <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
+                                        <?php if (in_array("readWrite", $code) || (empty($doc->permission)) && $this->session->get('userid') == $doc->iduser) : ?><td align="center"><a href="deleteFolderM?id=<?= base64_encode($doc->iddos) ?>" data-confirm="<?= $doc->nomdos ?>"><span class="glyphicon glyphicon-trash text-danger"></span></a></td><?php else: ?>
+                                                <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
+                                        </tr>
+<?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

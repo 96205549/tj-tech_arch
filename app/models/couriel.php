@@ -22,7 +22,10 @@ class couriel extends Model
     private $actif;
     private $lu;
     private $date;
+    private $exp;
    
+
+    
     /*
      * declaration des getters 
      */
@@ -70,6 +73,10 @@ class couriel extends Model
     {
         return $this->date;
     }
+     function getExp()
+    {
+        return $this->exp;
+    }
 
    
     
@@ -111,6 +118,11 @@ class couriel extends Model
     {
         $this->date = $date;
     }
+        
+    function setExp($exp)
+    {
+        $this->exp = $exp;
+    }
 
 
     public function initialize()
@@ -123,7 +135,7 @@ class couriel extends Model
         /*
          * relation avec la table fichier
          */
-        $this->belongsTo("idfile", "fichier", "idfile");
+        $this->belongsTo("iddos", "fichier", "idfile");
         /*
          * relation avec la table user 
          */

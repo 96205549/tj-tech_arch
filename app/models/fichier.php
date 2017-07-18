@@ -173,6 +173,6 @@ class fichier extends Model
         /*
          * relation avec la table couriel
          */
-        $this->hasMany("idfile", "couriel", "idfile");
+        $this->hasMany("idfile", "couriel", "iddos");
     }
 }

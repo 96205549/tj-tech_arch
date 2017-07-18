@@ -1,1 +1,212 @@
+<?php
+if(!isset($couriers)){
+    $couriers=[];
+}
+if(!isset($couriers)){
+    $couriers=[];
+}
+$modifier= $this->session->get('mod');
+$supprimer= $this->session->get('sup');
+?>
+
+<div class="contain">
+    <h4 class="text-info">Mes couriels</h4>
+    <!--h5><span class="col-md-offset-8 col-md-2"><a href="formatCorbeille"  class="btn-link btn-default formatDrash">Vider la corbeille <i class="glyphicon glyphicon-trash text-danger"></i></a></span></h5-->
+     <form method="post" action="dropDrash">
+         <!--h5><span class="col-md-2"><button   type="submit" class="btn-link " id="drop-file" >Supprimer <i class="glyphicon glyphicon-remove text-danger"></i></button></span></h5-->
+    <div class="clearfix">&nbsp;</div>
+    
+    <div class="col-md-12 row notification">
+        <?php if (sizeof($this->flashSession->getMessages(NULL, false)) > 0): ?>
+            <div><p><?php htmlspecialchars(($this->flashSession->output())) ?></p></div>
+        <?php endif; ?>
+    </div>
+    <div class="clearfix">&nbsp;</div>
+   
+    <div class="row">
+        <div class="col-md-12">
+          <div class="container-fluid container-fixed-lg bg-white">
+            <!-- START PANEL -->
+            <div class="panel panel-transparent">
+              
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-hover" id="basicTable">
+                    <thead>
+                      <tr>
+                        <!-- NOTE * : Inline Style Width For Table Cell is Required as it may differ from user to user 
+                                        Comman Practice Followed
+                                        -->
+                        <th style="width:1%">
+                          <button class="btn"><i class="fa fa-trash text-danger "></i>
+                          </button>
+                        </th>
+                        <th style="width:20%">Objet</th>
+                        <th style="width:20%">Document(s)</th>
+                        <th style="width:29%">Destinataire(s)</th>
+                        <th style="width:15%">Visualiser</th>
+                        <th style="width:15%">Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($couriers as $courier): ?>
+                        
+                        <tr <?php // ($courier->lu ==0)? "style\" bgcolor='#F8F9F9' \" ": " " ?>>
+                        <td class="v-align-middle">
+                          <div class="col-md-1 checkbox-inline">
+                            <input type="checkbox" value="3" id="checkbox1">
+                           <?php // ($courier->lu ==0)?"<span class=' fa fa-envelope text-danger'>&nbsp;</span> ": "<span class=' fa fa-envelope-open-o text-default'>&nbsp;</span> " ?>
+                            <label for="checkbox1"></label>
+                          </div>
+                        </td>
+                        <td class="v-align-middle ">
+                          <p><?= $courier->message ?></p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p><?php if($courier->type=="doc"){
+                          echo $courier->dossier->getNomdos()."doc";}else{
+                               echo $courier->fichier->getNomfile()."file";
+                          
+                             };
+                          ?></p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p><?= $courier->user->getFulname(); ?></p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p> <a href="<?= ($courier->type=="doc")? $this->url->get("inbox/doc?id=". base64_encode($courier->iddos)."_".base64_encode($courier->idcouriel)) : $this->url->get("inbox/file?id=". base64_encode($courier->iddos)."_".base64_encode($courier->idcouriel)) ?>"><span class="glyphicon glyphicon-eye-open text-primary"></span> </a></p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p> <?= $courier->date ?></p>
+                        </td>
+                      </tr>
+                      <?php endforeach; ?>
+                      
+                      <!--tr>
+                        <td class="v-align-middle">
+                          <div class="checkbox ">
+                            <input type="checkbox" value="3" id="checkbox2">
+                            <label for="checkbox2"></label>
+                          </div>
+                        </td>
+                        <td class="v-align-middle ">
+                          <p>Among the children</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>United States, India, China,Africa</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>you want English, Scottish, Welsh, Irish, British, European or UK even a British (name other original country you came form or have roots to E.G. A British Japanese or a 5th generation</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>Public</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>April 13,2014 10:13</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="v-align-middle">
+                          <div class="checkbox ">
+                            <input type="checkbox" value="3" id="checkbox3">
+                            <label for="checkbox3"></label>
+                          </div>
+                        </td>
+                        <td class="v-align-middle ">
+                          <p>A day to remember</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>United States, India, China,Africa</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>UK was on top of the art world 18-19 century had the best food, best cloths and best entertainment back then) it was a hyper nation</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>Public</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>April 13,2014 10:13</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="v-align-middle">
+                          <div class="checkbox ">
+                            <input type="checkbox" value="3" id="checkbox4">
+                            <label for="checkbox4"></label>
+                          </div>
+                        </td>
+                        <td class="v-align-middle ">
+                          <p>Life’s sadness shared</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>United States, India, China,Africa</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>he world speaks English. Common law, Magna Carta and the Bill of Rights are its wonderful legacy</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>Public</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>April 13,2014 10:13</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="v-align-middle">
+                          <div class="checkbox ">
+                            <input type="checkbox" value="3" id="checkbox5">
+                            <label for="checkbox5"></label>
+                          </div>
+                        </td>
+                        <td class="v-align-middle ">
+                          <p>First Tour</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>United States, India, China,Africa</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>it is more then ONE nation/nationality as its fall name is The United Kingdom of Great Britain and North Ireland..</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>Public</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>April 13,2014 10:13</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="v-align-middle">
+                          <div class="checkbox ">
+                            <input type="checkbox" value="3" id="checkbox6">
+                            <label for="checkbox6"></label>
+                          </div>
+                        </td>
+                        <td class="v-align-middle ">
+                          <p>First Tour</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>United States, India, China,Africa</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>it is more then ONE nation/nationality as its fall name is The United Kingdom of Great Britain and North Ireland..</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>Public</p>
+                        </td>
+                        <td class="v-align-middle">
+                          <p>April 13,2014 10:13</p>
+                        </td>
+                      </tr-->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- END PANEL -->
+          </div>
+          <!-- END CONTAINER FLUID -->
+</div>
+    </div>
+     </form>
+</div>
 

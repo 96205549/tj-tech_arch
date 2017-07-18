@@ -49,7 +49,16 @@ $iduser = $this->session->get('userid');
 
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-responsive table-striped">
+            
+             <div class="container-fluid container-fixed-lg bg-white">
+            <!-- START PANEL -->
+            <div class="panel panel-transparent">
+            
+             <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-hover" id="basicTable">
+            
+            <!--table class="table table-responsive table-striped"-->
                 <tr class="table-striped">
                     <td> </td>
                     <td><b>N&deg;</b></td>
@@ -90,6 +99,10 @@ $iduser = $this->session->get('userid');
                 <?php endforeach; ?>
 
             </table>
+                </div>
+             </div>
+            </div>
+             </div>
         </div>
     </div>
 </div>

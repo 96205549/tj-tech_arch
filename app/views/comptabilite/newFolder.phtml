@@ -2,7 +2,8 @@
 if (!isset($dossiers)) {
     $dossiers = [];
 }
-$iduser= $this->session->get('userid');
+$iduser = $this->session->get('userid');
+
 ?>
 <div class="contain">
     <h4 class="text-warning">Nouveau dossier</h4>
@@ -48,7 +49,16 @@ $iduser= $this->session->get('userid');
 
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-responsive table-striped">
+            
+             <div class="container-fluid container-fixed-lg bg-white">
+            <!-- START PANEL -->
+            <div class="panel panel-transparent">
+            
+             <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-hover" id="basicTable">
+            
+            <!--table class="table table-responsive table-striped"-->
                 <tr class="table-striped">
                     <td> </td>
                     <td><b>N&deg;</b></td>
@@ -77,15 +87,22 @@ $iduser= $this->session->get('userid');
                             <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
                         <?php if (in_array("readWrite", $code) || (empty($doc->permission)) && $this->session->get('userid') == $doc->iduser) : ?><td align="center"><a href="deleteFolderPn?id=<?= base64_encode($doc->iddos) ?>" data-confirm="<?= $doc->nomdos ?>"><span class="glyphicon glyphicon-trash text-danger"></span></a></td><?php else: ?>
                             <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td><?php endif; ?>
-                            <?php if($doc->iduser == $iduser): ?>
-                            <td align="center"><a href="sharedoc?id=<?= base64_encode($doc->iddos) ?>" ><span class="fa fa-share-alt text-primary"></span></a></td>
-                            <?php else: ?>
+                        <?php if ($doc->iduser == $iduser): ?>
+                            <td align="center">
+                                <a href="sharedoc?id=<?= base64_encode($doc->iddos)  ?>" >                              
+                                <span class="fa fa-share-alt"></span></a>
+                            </td>
+                        <?php else: ?>
                             <td align="center">&nbsp;<i class="fa fa-lock text-danger"></i></td>
-                        <?php endif; ?>
+                            <?php endif; ?>
                     </tr>
                 <?php endforeach; ?>
 
             </table>
+                </div>
+             </div>
+            </div>
+             </div>
         </div>
     </div>
 </div>

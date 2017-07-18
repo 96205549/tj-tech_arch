@@ -32,23 +32,49 @@ class courielController extends Controller
     /*
      * code source des couriel envoyé
      */
+
     public function sendAction()
     {
         if (!$this->session->get('userid')) {
             $this->response->redirect("session/logout");
         }
-        
-        $this->view->page="couriel";
+
+           $iduser = $this->session->get('userid');
+
+        $couriers = couriel:: find(["exp <>:ex:", 'bind' => ['ex'=>$iduser]]);
+        if ($couriers) {
+            foreach ($couriers as $courier):
+                $data = [];
+                $dossiers = dossier::find(["iddos=:val:", 'bind' => ['val' => $couriers->iddos]]);
+                $data = $dossiers;
+            endforeach;
+        }
+        $this->view->dossiers = ($data) ? $data : [];
+        $this->view->couriers = ($couriers) ? $couriers : [];
+       
+        $this->view->page = "couriel";
     }
     /*
      * code source des couriel reçu
      */
+
     public function recuAction()
     {
         if (!$this->session->get('userid')) {
             $this->response->redirect("session/logout");
         }
-        
-        $this->view->page="couriel";
+        $iduser = $this->session->get('userid');
+
+        $couriers = couriel:: find(["iduser =:val: and exp <>:ex:", 'bind' => ['val' => $iduser,'ex'=>$iduser]]);
+        if ($couriers) {
+            foreach ($couriers as $courier):
+                $data = [];
+                $dossiers = dossier::find(["iddos=:val:", 'bind' => ['val' => $couriers->iddos]]);
+                $data = $dossiers;
+            endforeach;
+        }
+        $this->view->dossiers = ($data) ? $data : [];
+        $this->view->couriers = ($couriers) ? $couriers : [];
+        $this->view->page = "couriel";
     }
 }

@@ -80,7 +80,15 @@ $supprimer= $this->session->get('sup');
     <div class="clearfix">&nbsp;</div>
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-responsive table-striped">
+            
+            
+           <div class="container-fluid container-fixed-lg bg-white">
+            <!-- START PANEL -->
+            <div class="panel panel-transparent">
+            
+             <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-hover" id="basicTable">
                 <tr class="table-striped">
                     <td> </td>
                     <td><b>N&deg;</b></td>
@@ -106,6 +114,11 @@ $supprimer= $this->session->get('sup');
                 </tr>
                 <?php endforeach; ?>
             </table>
+                </div>
+             </div>
+            </div>
+           </div>
+                    
         </div>
     </div>
 </div>
