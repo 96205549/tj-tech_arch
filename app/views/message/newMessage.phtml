@@ -49,11 +49,14 @@ if (!isset($contacts)) {
                 </div>
                 <div class="clearfix">&nbsp;</div>
                 <div class="row">
-                    <span class="col-md-2">&nbsp;</span>
+                    <span class="col-md-2 text-warning"><font size="1">1071 charact&egrave;res max.</font></span>
                     <span class="col-md-10">
-                        <textarea rows="10" id="message" class="form-control ckeditor" name="message"></textarea>
+                        <textarea rows="10" id="message" class="form-control ckeditor" name="message" maxlength="1070" onkeydown="KeyPress();"></textarea>
                     </span>
+                    <span class="col-md-push-2 col-md-10" id="nbsms"><span id="compteur">1sms(1 car)</span></span>
                     <span class="clearfix">&nbsp;</span>
+                    <span class="col-md-push-2 col-md-10"> <input type="hidden" name="smsnbre" id="nbre"></span>
+                     <span class="clearfix">&nbsp;</span>
                     <span class="col-md-2">
                         &nbsp;
                     </span>

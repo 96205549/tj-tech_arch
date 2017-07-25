@@ -339,6 +339,30 @@ class DashboardController extends Controller
            return $this->response->redirect("session/logout");
         }
         
+        $url = "http://localhost/personnel/smsbunk/api/credit.php?idcompte=2";
+        $data= file_get_contents($url);
+        $json= json_decode($data);
+        //die(var_dump($json->{'credit'}));
+        // urlin pour les entres le solde des credit
+        $urlSin= "http://localhost/personnel/smsbunk/api/soldein.php?idcompte=2";
+         // urlin pour les sorties le solde des debits
+        $urlSout= "http://localhost/personnel/smsbunk/api/soldeout.php?idcompte=2";
+        
+        $soldin= file_get_contents($urlSin);
+        $jsonIn= json_decode($soldin);
+        //die(var_dump($jsonIn));
+        $soldout= file_get_contents($urlSout);
+        $jsonOut= json_decode($soldout);
+          
+        $solda= $jsonIn->{'soldein'}[0]->{'sms'};
+        $soldb= $jsonOut->{'soldeout'}[0]->{'sms'};
+        $sold= $solda - $soldb;
+        // die(var_dump($solda - $soldb));
+       
+       // $this->view->solda = $jsonIn->{'soldein'};
+        $this->view->solde = $sold;
+        $this->view->credit = $json->{'credit'};
+        
         $this->view->page="settings";
         
     }

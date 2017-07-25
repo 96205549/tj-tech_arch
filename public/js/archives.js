@@ -14,6 +14,33 @@ $(document).ready(function () {
     });
 });
 */
+function KeyPress()
+    {
+        total = document.getElementById("message").value.length+1;
+         document.getElementById("compteur").innerHTML ="1sms ("+ total+" Car)";
+        document.getElementById("nbre").value = "1";
+        if(total > 160){ 
+            document.getElementById("compteur").innerHTML = "2sms("+ total+" Car)";
+            document.getElementById("nbre").value = "2";
+        }if(total> 320){
+            document.getElementById("compteur").innerHTML = "3sms("+ total+" Car)";
+            document.getElementById("nbre").value = "3";
+        }
+        if(total> 480){
+            document.getElementById("compteur").innerHTML = "4sms("+ total+" Car)";
+            document.getElementById("nbre").value = "4";
+        } if(total> 640){
+            document.getElementById("compteur").innerHTML = "5sms("+ total+" Car)";
+            document.getElementById("nbre").value = "5";
+        }if(total> 800){
+            document.getElementById("compteur").innerHTML = "6sms("+ total+" Car)";
+            document.getElementById("nbre").value = "6";
+        } if(total> 960){
+            document.getElementById("compteur").innerHTML = "7sms("+ total+" Car)";
+            document.getElementById("nbre").value = "7";
+        }
+    }
+
 
 
 

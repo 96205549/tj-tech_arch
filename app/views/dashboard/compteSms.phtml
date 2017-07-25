@@ -1,1 +1,105 @@
-echo
+<?php
+if (!isset($credit)) {
+    $credit = [];
+}
+if (!isset($sold)) {
+    //$sold = [];
+}
+
+?>
+<div class="contain">
+    <div class="clearfix">
+        &nbsp;
+    </div>
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ibox float-e-margins">
+                    <div class="row">
+                        <span class="col-md-12 text-info">
+                            <h4>Compte Sms</h4>
+                        </span>
+
+                    </div>
+                    <div class="clearfix">&nbsp;</div>
+                    <div class="ibox-content">
+                        <!--div class="row m-b-sm m-t-sm">
+                            <form  method="post" action="">
+                                <div class="col-md-2">
+                                    <a href="" role="button" id="loading-example-btn" class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> Refresh</a>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Search" name="searchtext" class="input-sm form-control" value="<?php //echo isset($searchText) ? (string) $searchText : null;  ?>"> 
+                                        <span class="input-group-btn">
+                                            <button type="submit" name="go" class="btn btn-sm btn-primary"> Go!</button> 
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div-->
+                        <form method="post" action="archivesSms">
+                            <div class="clearfix">&nbsp;</div>
+
+                            <div class="row table-responsive col-md-12">
+
+
+                                <div class="container-fluid container-fixed-lg bg-white">
+                                    <div class="row col-md-12 text-info"><span>Mon Portefeuille: <b><?= (isset($solde)) ? $solde : "0" ?> unit&eacute;(s)</b></span></div>
+                                    <div class="clearfix">&nbsp;</div>
+                                    <div class="clearfix">&nbsp;</div>
+                                    <!-- START PANEL -->
+                                    <div class="panel panel-transparent">
+
+                                        <div class="panel-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover" id="basicTable">
+                                                    <thead>
+                                                        <tr>
+                                                            
+                                                            <th>Date de recharge</th>
+                                                            <th>code de recharge</th>
+                                                            <th>Montant</th>                                    
+                                                            <th>Unit&eacute;(s)</th>
+                                                           
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                            <?php foreach ($credit as $value): ?>
+                                                        
+                                                            <tr class="gradeX" class="small-text" style="font-size:12px;">                                                  
+                                                                <td><?= date("d-m-Y H:i:s",$value->date); ?></td>
+                                                                <td>824956274944</td>
+                                                                <td><?= $value->montant; ?></td>
+                                                                <td><?= $value->sms; ?></td>                                                              
+                                                            </tr>
+                                                        <?php endforeach; ?>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                           <th>Date de recharge</th>
+                                                            <th>code de recharge</th>
+                                                            <th>Montant</th>                                    
+                                                            <th>Unit&eacute;(s)</th>                                    
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+

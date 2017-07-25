@@ -52,7 +52,7 @@ function coup_word($param) {
         
         <script type="text/javascript">
             //<!--
-            document.oncontextmenu = new Function("return false");
+           // document.oncontextmenu = new Function("return false");
             //-->
         </script>
     </head>
