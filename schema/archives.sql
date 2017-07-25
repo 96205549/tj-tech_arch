@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Ven 21 Juillet 2017 à 15:42
+-- Généré le :  Mar 25 Juillet 2017 à 19:20
 -- Version du serveur :  5.7.11
 -- Version de PHP :  5.6.19
 
@@ -526,7 +526,14 @@ INSERT INTO `sendsms` (`idsms`, `expediteur`, `destinataire`, `message`, `status
 (78, 'tj-tech', '22996826393', 'test alpha', 'Envoyer', 1498232870, 1, 1),
 (79, 'tj-tech', '22996205549', 'test alpha', 'Envoyer', 1498232871, 1, 1),
 (80, 'joezer', '+22996138021', 'salut gg je l\'ai call mais il m\'a dit qu\'il na pas d\'argent.', 'Envoyer', 1500538875, 1, 0),
-(81, 'joezer', '+22996205549', 'salut gg je l\'ai call mais il m\'a dit qu\'il na pas d\'argent.', 'Envoyer', 1500538884, 1, 0);
+(81, 'joezer', '+22996205549', 'salut gg je l\'ai call mais il m\'a dit qu\'il na pas d\'argent.', 'Envoyer', 1500538884, 1, 0),
+(82, 'joe+free', '22996205549', 'nous somme roi de la programmation', 'Envoyer', 1501005124, 1, 0),
+(83, 'Electra', '+22996205549', 'test au serveur', 'Envoyer', 1501005158, 1, 0),
+(84, 'Electra', '22996205549', 'test au serveur', 'Envoyer', 1501005304, 1, 0),
+(85, 'Electra', '22996205549', 'nous somme roi de la programmation', 'Envoyer', 1501008040, 1, 0),
+(86, 'Electra', '22996205549', 'je revis ma vie', 'Envoyer', 1501008439, 1, 0),
+(87, 'Electra', '22996205549', 'bonjour mr lorel c\'est joezer , ceci est un test de mon application  electra. et concernant la messagerie pour benin challenge n\' hesiter pas a me faire confiance bonjour mr lorel c\'est joezer , ceci est un test de mon application  electra. et concernant la messagerie pour benin challenge n\' hesiter pas a me faire confiance bonjour mr lorel c\'est joezer , ceci est un test de mon application  electra. et concernant la messagerie pour benin challenge n\' hesiter pas a me faire confiance ', 'Envoyer', 1501009492, 1, 0),
+(88, 'joe+free', '22996205549', 'bonjour mr lorel c\'est joezer , ceci est un test de mon application  electra. et concernant la messagerie pour benin challenge n\' hesiter pas a me faire confiance bonjour mr lorel c\'est joezer , ceci est un test de mon application  electra. et concernant la messagerie pour benin challenge n\' hesiter pas a me faire confiance ', 'Envoyer', 1501009581, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -732,7 +739,7 @@ ALTER TABLE `recentactivity`
 -- AUTO_INCREMENT pour la table `sendsms`
 --
 ALTER TABLE `sendsms`
-  MODIFY `idsms` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `idsms` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 --
 -- AUTO_INCREMENT pour la table `service`
 --
